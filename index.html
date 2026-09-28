@@ -68,6 +68,7 @@ h3{font-size:12px;letter-spacing:.1em;color:var(--ink-3);margin:0 0 8px;font-wei
 .bnav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .bnav button[aria-selected="true"]{color:var(--ink)}
 .bnav button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+.bnav .nav2{font-size:10px;line-height:1.2;text-align:center}
 .bnav .badge{position:absolute;top:6px;left:calc(50% + 6px);font-family:var(--mono);font-size:10px;background:var(--concern);color:#fff;border-radius:9px;padding:0 5px;line-height:16px}
 
 /* form */
@@ -455,6 +456,7 @@ body{margin:0}
 
     <!-- 振り返り -->
     <section data-panel="reflect" hidden>
+      <h2 style="margin-bottom:12px">コーチの振り返り</h2>
       <div class="segbar five" role="group" aria-label="振り返りの表示">
         <button type="button" data-rview="write" aria-pressed="true">今週</button>
         <button type="button" data-rview="feed" aria-pressed="false">みんな</button>
@@ -537,7 +539,7 @@ body{margin:0}
   <button role="tab" data-tab="log" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r=".8"/><circle cx="4" cy="12" r=".8"/><circle cx="4" cy="18" r=".8"/></svg>記録</button>
   <button role="tab" data-tab="summary" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>まとめ<span class="badge" id="alertBadge" hidden></span></button>
   <button role="tab" data-tab="players" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.2a3 3 0 010 5.6M18 14.5c1.8.8 3 2.8 3 5.5"/></svg>部員</button>
-  <button role="tab" data-tab="reflect" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg>振り返り<span class="badge" id="rBadge" hidden>未</span></button>
+  <button role="tab" data-tab="reflect" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg><span class="nav2">コーチの<br>振り返り</span><span class="badge" id="rBadge" hidden>未</span></button>
 </nav>
 
 <div class="sheet" id="meSheet" hidden>
