@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#16223A">
+<title>ラクロス気づきノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=IBM+Plex+Mono:wght@500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F2F4F1; --surface:#FFFFFF; --sunk:#E7EBE8; --ink:#16223A; --ink-2:#4B5770; --ink-3:#77829A;
+  --line:#D7DDDC; --accent:#E8960C; --on-accent:#16223A;
+  --good:#1F7F54; --concern:#C23B29; --flat:#77829A; --watch:#9A6A00;
+  --display:"Dela Gothic One","Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic","Meiryo",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1523; --surface:#162034; --sunk:#1D2942; --ink:#E6EBF2; --ink-2:#A7B1C4; --ink-3:#7E89A0;
+    --line:#2A3651; --accent:#F2AA2E; --on-accent:#0E1523;
+    --good:#4DC08B; --concern:#F07A64; --flat:#8591A8; --watch:#E0B040;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1523; --surface:#162034; --sunk:#1D2942; --ink:#E6EBF2; --ink-2:#A7B1C4; --ink-3:#7E89A0;
+  --line:#2A3651; --accent:#F2AA2E; --on-accent:#0E1523;
+  --good:#4DC08B; --concern:#F07A64; --flat:#8591A8; --watch:#E0B040;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.7;padding-inline:16px;padding-block:0 calc(88px + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+.wrap{max-width:680px;margin:0 auto}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px;border-bottom:1px solid var(--line)}
+.top h1{font-family:var(--display);font-weight:400;font-size:21px;margin:0;line-height:1.2;white-space:nowrap}
+.top h1 b{color:var(--accent);font-weight:400}
+.me{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px 5px 6px;font-weight:700;font-size:14px;min-height:40px;max-width:60%}
+.me .av{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-size:13px;flex:none}
+.me span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.banner{margin-top:12px;padding:10px 14px;border:1px solid var(--line);background:var(--sunk);border-radius:8px;font-size:13px;color:var(--ink-2)}
+.banner strong{color:var(--ink)}
+
+main{padding-top:18px}
+h2{font-family:var(--display);font-weight:400;font-size:19px;margin:0;text-wrap:balance}
+h3{font-size:12px;letter-spacing:.1em;color:var(--ink-3);margin:0 0 8px;font-weight:700}
+.lead{color:var(--ink-2);margin:2px 0 16px;font-size:13px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.stack{display:flex;flex-direction:column;gap:22px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+.sec-head h3{margin:0}
+
+/* bottom nav */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (min-width:720px){.bnav{left:50%;right:auto;width:680px;transform:translateX(-50%);border:1px solid var(--line);border-bottom:0;border-radius:14px 14px 0 0}}
+.bnav button{position:relative;background:none;border:0;min-height:60px;padding:8px 0 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11px;font-weight:700;color:var(--ink-3)}
+.bnav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bnav button[aria-selected="true"]{color:var(--ink)}
+.bnav button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+.bnav .badge{position:absolute;top:6px;left:calc(50% + 6px);font-family:var(--mono);font-size:10px;background:var(--concern);color:#fff;border-radius:9px;padding:0 5px;line-height:16px}
+
+/* form */
+form.note-form{display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:8px;border:0;margin:0;padding:0;min-width:0}
+.field > .label,.field > legend{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink-2);padding:0}
+.field legend{margin-bottom:8px}
+.hint{font-weight:400;color:var(--ink-3);letter-spacing:0}
+.meta-row{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:10px;align-items:end}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative;display:inline-flex;align-items:center;gap:4px;min-height:38px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:14px;font-weight:500;cursor:pointer;user-select:none}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip:has(input:checked){background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.seg .chip{justify-content:center;border-radius:10px;min-height:52px;flex-direction:column;gap:0;font-size:13px;padding:6px 4px}
+.seg .chip b{font-size:18px;line-height:1.1}
+.chip.sig-up:has(input:checked){background:var(--good);border-color:var(--good);color:#fff}
+.chip.sig-down:has(input:checked){background:var(--concern);border-color:var(--concern);color:#fff}
+.chip.sig-flat:has(input:checked){background:var(--flat);border-color:var(--flat);color:#fff}
+input[type=text],input[type=date],input[type=search],select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:16px}
+select{padding-right:8px}
+textarea{resize:vertical;min-height:110px;line-height:1.6}
+details.more summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--ink-2);list-style:none;padding:6px 0}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"＋ "}
+details.more[open] summary::before{content:"− "}
+details.more[open] summary{margin-bottom:6px}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:10px;font-weight:700;min-height:44px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.block{width:100%;min-height:52px;font-size:16px}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.small{min-height:36px;padding:6px 12px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;flex-direction:column;gap:8px}
+.form-msg{font-size:13px;color:var(--ink-2);min-height:1em;text-align:center}
+.form-msg.err{color:var(--concern)}
+.editing{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--sunk);border-radius:10px;padding:8px 12px;font-size:13px;font-weight:700}
+
+/* coach Good/More */
+.coach-fields{display:flex;flex-direction:column;gap:14px;padding:14px;border-radius:12px;background:var(--sunk)}
+.coach-fields textarea{min-height:88px}
+.coach-lead{margin:0;font-size:13px;color:var(--ink-2)}
+.gm-tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.04em;border-radius:4px;padding:0 7px;margin-right:6px;color:#fff;vertical-align:1px}
+.gm-tag.g{background:var(--good)} .gm-tag.m{background:var(--watch)} .gm-tag.t{background:var(--ink-2)}
+.gm{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.gm p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+/* notes */
+.notes{list-style:none;margin:0;padding:0}
+.note{padding:14px 0;border-bottom:1px solid var(--line)}
+.note:last-child{border-bottom:0}
+.note-meta{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:12px;color:var(--ink-3)}
+.who{font-weight:700;color:var(--ink)}
+.by{color:var(--ink-2)}
+.cat{background:var(--sunk);color:var(--ink-2);border-radius:4px;padding:0 7px}
+.pill{font-weight:700;border-radius:4px;padding:0 6px;border:1px solid currentColor}
+.pill-up{color:var(--good)} .pill-down{color:var(--concern)} .pill-flat{color:var(--flat)}
+.note-text{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.note-action{margin:8px 0 0;font-size:13px;color:var(--ink-2);display:flex;gap:8px;align-items:baseline;overflow-wrap:anywhere}
+.note-action span{flex:none;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.04em}
+.note-action.done{text-decoration:line-through;color:var(--ink-3)}
+.note-tools{display:flex;gap:4px;margin:6px 0 0 -8px}
+.link{background:none;border:0;padding:6px 8px;color:var(--ink-2);font-size:13px;text-decoration:underline;text-underline-offset:3px;min-height:36px}
+.link.danger{color:var(--concern)}
+.day{font-family:var(--display);font-weight:400;font-size:14px;margin:20px 0 0;color:var(--ink-2);position:sticky;top:calc(env(safe-area-inset-top,0px) + 65px);background:var(--bg);padding-block:4px;z-index:2}
+.day:first-child{margin-top:0}
+.sample-tag{font-size:11px;font-weight:700;color:var(--watch);border:1px dashed var(--watch);border-radius:4px;padding:0 6px}
+.empty{color:var(--ink-3);font-size:13px;padding:10px 0;margin:0}
+
+/* alerts */
+.alerts{list-style:none;margin:0;padding:0}
+.alert{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.alert:last-child{border-bottom:0}
+.alert-mark{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:#fff;margin-top:2px}
+.lv-concern .alert-mark{background:var(--concern)} .lv-watch .alert-mark{background:var(--watch)} .lv-good .alert-mark{background:var(--good)}
+.alert strong{display:block;font-size:14px;line-height:1.5}
+.alert p{margin:2px 0 0;font-size:13px;color:var(--ink-2);overflow-wrap:anywhere}
+.alert .link{padding-left:0;margin-top:2px}
+
+/* timeline filters */
+.searchbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.active-range{display:inline-flex;align-items:center;gap:6px;background:var(--sunk);border-radius:999px;padding:2px 4px 2px 12px;font-size:13px;margin-top:10px}
+.active-range button{border:0;background:none;width:30px;height:30px;border-radius:50%;font-size:16px}
+.result-count{font-size:12px;color:var(--ink-3);margin:10px 0 4px}
+
+/* summary */
+.period{display:flex;flex-direction:column;gap:12px}
+.segbar{display:grid;grid-template-columns:1fr 1fr;background:var(--sunk);border-radius:10px;padding:3px}
+.segbar button{border:0;background:none;border-radius:8px;min-height:38px;font-weight:700;color:var(--ink-2)}
+.segbar button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.pnav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px}
+.pnav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:18px}
+.pnav button:disabled{opacity:.35}
+.pnav .plabel{text-align:center}
+.pnav .plabel strong{display:block;font-size:17px}
+.pnav .plabel span{font-size:12px;color:var(--ink-3)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.tile .k{font-size:11px;color:var(--ink-2);font-weight:700}
+.tile .v{font-family:var(--mono);font-size:26px;line-height:1.25}
+.tile .d{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+.up-t{color:var(--good)} .down-t{color:var(--concern)}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:grid;grid-template-columns:6.5em minmax(0,1fr) 2.2em;gap:8px;align-items:center;font-size:13px}
+.bar-row .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.bar-row .nm.zero{color:var(--ink-3)}
+.bar-track{height:14px;background:var(--sunk);border-radius:4px;overflow:hidden;display:flex}
+.bar-track i{display:block;height:100%}
+.bar-track .b-all{background:var(--ink-2)}
+.bar-track .b-up{background:var(--good)} .bar-track .b-flat{background:var(--flat);opacity:.5} .bar-track .b-down{background:var(--concern)}
+.bar-row .ct{font-family:var(--mono);text-align:right;font-size:12px;color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-3);margin-top:10px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.ai-out{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.8;margin:0}
+.ai-meta{font-size:12px;color:var(--ink-3);margin:10px 0 0}
+.ai-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.nosee{font-size:13px;color:var(--ink-2);margin:8px 0 0}
+.nosee b{color:var(--watch)}
+
+.scroll-x{overflow-x:auto;margin-inline:-4px;padding-inline:4px}
+table.heat{border-collapse:separate;border-spacing:3px;width:100%;min-width:420px;font-size:12px}
+.heat th{font-weight:500;color:var(--ink-3);text-align:center;padding:2px;white-space:nowrap}
+.heat th.rowh{text-align:left;color:var(--ink);font-weight:700;padding-right:6px}
+.heat td{height:36px;text-align:center;border-radius:4px;background:var(--sunk);font-family:var(--mono)}
+.heat td .g{display:block;font-size:10px;color:var(--good);line-height:1}
+.heat td.hot{color:#fff} .heat td.hot .g{color:#fff}
+
+/* players */
+.player-add{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-bottom:16px}
+.players{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.pcard-head{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.pcard-head strong{font-size:16px;overflow-wrap:anywhere}
+.pcard-head span{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.dots{display:flex;gap:4px;align-items:center;min-height:14px}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot.up{background:var(--good)} .dot.down{background:var(--concern)} .dot.flat{background:var(--flat);opacity:.55}
+.dots .none{font-size:12px;color:var(--ink-3)}
+.flag{font-size:12px;font-weight:700}
+.flag.concern{color:var(--concern)} .flag.watch{color:var(--watch)} .flag.good{color:var(--good)}
+.pcard .last{font-size:13px;color:var(--ink-2);margin:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pcard-tools{display:flex;flex-wrap:wrap;margin-left:-8px}
+
+/* learn */
+.todo{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.todo:last-child{border-bottom:0}
+.check{width:30px;height:30px;border-radius:8px;border:2px solid var(--ink-3);background:transparent;padding:0;display:grid;place-items:center;font-size:15px;line-height:1}
+.check.on{background:var(--good);border-color:var(--good);color:#fff}
+.todo p{margin:0;overflow-wrap:anywhere}
+.todo small{color:var(--ink-3);font-size:12px;display:block}
+.todo.done p{text-decoration:line-through;color:var(--ink-3)}
+
+/* sheet */
+.sheet{position:fixed;inset:0;z-index:30;display:flex;align-items:flex-end;justify-content:center;background:rgba(10,15,25,.45)}
+.sheet-panel{background:var(--surface);width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px));max-height:85%;overflow:auto}
+.sheet-panel h2{margin-bottom:4px}
+.names{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}
+.names button{min-height:52px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-size:15px;overflow-wrap:anywhere;padding:4px}
+.names button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+
+/* reflect */
+.segbar.five{grid-template-columns:repeat(5,minmax(0,1fr));margin-bottom:16px}
+.segbar.five button{font-size:12.5px;padding:0 1px}
+.refl .gm{margin-top:0}
+.rv{display:flex;flex-direction:column;gap:18px}
+.prev-box{background:var(--sunk);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.prev-box .k{font-size:12px;font-weight:700;color:var(--ink-2)}
+.prev-box .t{font-weight:700;overflow-wrap:anywhere}
+.resurface{border:1px dashed var(--accent);border-radius:12px;padding:14px;background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.resurface .k{font-size:12px;font-weight:700;color:var(--watch);letter-spacing:.04em}
+.resurface blockquote{margin:6px 0 4px;font-size:17px;font-weight:700;line-height:1.55;overflow-wrap:anywhere}
+.resurface small{color:var(--ink-3);font-size:12px}
+.status-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.stbtn{border:1px solid var(--line);background:var(--surface);border-radius:999px;min-height:36px;padding:4px 12px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.stbtn[aria-pressed="true"].tried{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.stbtn[aria-pressed="true"].worked{background:var(--good);border-color:var(--good);color:#fff}
+.refl{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.refl-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.refl-head .who{display:flex;align-items:center;gap:8px;font-size:15px}
+.refl-head .av{width:30px;height:30px;border-radius:50%;background:var(--sunk);display:grid;place-items:center;font-size:13px;font-weight:700;flex:none}
+.refl-head span.wk{font-size:12px;color:var(--ink-3);white-space:nowrap}
+.refl .body{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.refl .lrn{margin:0;padding:8px 10px;border-radius:8px;background:color-mix(in srgb,var(--accent) 10%,var(--surface));font-weight:700;overflow-wrap:anywhere}
+.refl .nxt{margin:0;font-size:13px;color:var(--ink-2);overflow-wrap:anywhere}
+.refl .prv{margin:0;font-size:12px;color:var(--ink-3);overflow-wrap:anywhere}
+.rx{display:flex;flex-wrap:wrap;gap:6px}
+.rx button{border:1px solid var(--line);background:var(--bg);border-radius:999px;min-height:34px;padding:2px 10px;font-size:13px;display:inline-flex;align-items:center;gap:4px}
+.rx button[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 18%,var(--surface))}
+.rx button .c{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.cmts{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:8px}
+.cmt{font-size:13px;overflow-wrap:anywhere}
+.cmt b{margin-right:6px}
+.cmt .link{min-height:0;padding:0 4px;font-size:12px}
+.cform{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+.cform input{padding:7px 10px;font-size:16px}
+.week-h{font-family:var(--display);font-weight:400;font-size:14px;color:var(--ink-2);margin:4px 0 -6px}
+.lcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.lcard p{margin:0;font-weight:700;overflow-wrap:anywhere}
+.lcard small{display:block;color:var(--ink-3);font-size:12px;margin-top:2px}
+.lgroup{display:flex;flex-direction:column;gap:8px}
+.principle .lcard{border-color:var(--good)}
+.lrows{display:flex;flex-direction:column;gap:6px}
+.lrow{display:grid;grid-template-columns:minmax(0,1fr) 40px;gap:6px}
+.lrow .rm{border:1px solid var(--line);background:var(--surface);border-radius:10px;font-size:18px;color:var(--ink-3)}
+.addrow{align-self:flex-start;border:1px dashed var(--ink-3);background:transparent;border-radius:10px;min-height:40px;padding:6px 14px;font-weight:700;font-size:14px;color:var(--ink-2)}
+.prev-item{display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px solid var(--line)}
+.prev-item:first-of-type{border-top:0;padding-top:0}
+.toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:10px;font-size:14px;font-weight:700;z-index:40;max-width:calc(100% - 32px);text-align:center}
+@media (prefers-reduced-motion:no-preference){.toast{animation:pop .2s ease-out}@keyframes pop{from{transform:translate(-50%,6px);opacity:0}}}
+body{margin:0}
+.gate{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.gate-box{width:100%;max-width:360px;display:flex;flex-direction:column;gap:14px;text-align:center}
+.gate-box h1{font-family:var(--display);font-weight:400;font-size:26px;margin:0}
+.gate-box h1 b{color:var(--accent);font-weight:400}
+.gate-box input{text-align:center;font-family:var(--mono);font-size:24px;letter-spacing:.3em}
+.memo-edit{display:flex;flex-direction:column;gap:8px}
+.memo-edit textarea{min-height:180px}
+.copy-box textarea{min-height:220px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <form class="gate-box" id="gateForm" novalidate>
+    <h1>気づき<b>ノート</b></h1>
+    <p class="lead" style="margin:0">チームのパスコードを入力してください。</p>
+    <input type="password" id="gatePass" inputmode="numeric" autocomplete="off" aria-label="パスコード">
+    <button class="btn primary block" type="submit" id="gateBtn">はじめる</button>
+    <p class="form-msg" id="gateMsg" role="status"></p>
+  </form>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <h1>気づき<b>ノート</b></h1>
+    <button class="me" id="meBtn" type="button" aria-label="書く人を選ぶ"><span class="av" id="meAv">?</span><span id="meName">名前を選ぶ</span></button>
+  </header>
+  <div id="banner" class="banner" hidden></div>
+
+  <main>
+    <!-- 書く -->
+    <section data-panel="write">
+      <div class="stack">
+        <div class="panel">
+          <form class="note-form" id="noteForm" novalidate>
+            <div class="editing" id="editingBar" hidden><span>記録を編集中</span><button class="link" type="button" id="cancelEdit">やめる</button></div>
+            <div class="meta-row">
+              <label class="field" for="f-date"><span class="label">日付</span><input type="date" id="f-date" name="date"></label>
+              <label class="field" for="f-scene"><span class="label">場面</span>
+                <select id="f-scene" name="scene"></select>
+              </label>
+            </div>
+            <fieldset class="field"><legend>誰についての気づき？</legend>
+              <div class="chips" id="subjectChips"></div>
+            </fieldset>
+            <fieldset class="field" id="playerField"><legend id="playerLegend">選手 <span class="hint">（タップで選択）</span></legend>
+              <div class="chips" id="playerChips"></div>
+              <input type="text" id="f-newplayer" name="newPlayer" autocomplete="off" placeholder="＋ 新しい選手の名前を入力" aria-label="新しい選手の名前">
+            </fieldset>
+            <label class="field" for="f-text" id="textField"><span class="label">気づき</span>
+              <textarea id="f-text" name="text" placeholder="例：ミスの後に声が止まる時間が長かった。先週より表情が硬い。"></textarea>
+            </label>
+            <div class="coach-fields" id="coachFields" hidden>
+              <p class="coach-lead">自分の関わり方を振り返ります。</p>
+              <label class="field" for="f-good"><span class="label"><span class="gm-tag g">Good</span>うまくいったこと・続けたいこと</span>
+                <textarea id="f-good" name="good" placeholder="例：ドリルの前に目的を一言で伝えたら、学生の動きがそろった"></textarea>
+              </label>
+              <label class="field" for="f-more"><span class="label"><span class="gm-tag m">More</span>もっとこうしたかったこと</span>
+                <textarea id="f-more" name="more" placeholder="例：ミスした学生への声かけが遅れた。すぐ近くに行けばよかった"></textarea>
+              </label>
+              <label class="field" for="f-goal"><span class="label"><span class="gm-tag t">Next</span>来週の目標（ネクストアクション）</span>
+                <input type="text" id="f-goal" name="goal" placeholder="例：ミスの直後に、10秒以内で本人に一声かける">
+              </label>
+            </div>
+            <fieldset class="field" id="signalField"><legend>変化の方向</legend>
+              <div class="seg" id="signalChips"></div>
+            </fieldset>
+            <fieldset class="field"><legend id="catLegend">分野 <span class="hint">（複数可）</span></legend>
+              <div class="chips" id="catChips"></div>
+            </fieldset>
+            <details class="more" id="nextBox">
+              <summary id="nextSummary">次のアクションを書く</summary>
+              <input type="text" id="f-next" name="nextAction" placeholder="例：練習後に5分だけ話を聞く" aria-label="次のアクション">
+            </details>
+            <div class="actions">
+              <button class="btn primary block" type="submit" id="saveBtn">記録する</button>
+              <span class="form-msg" id="formMsg" role="status"></span>
+            </div>
+          </form>
+        </div>
+        <div>
+          <div class="sec-head"><h3>今、気にかけたいこと</h3><button class="link" data-go='{"tab":"summary"}'>まとめを見る</button></div>
+          <ul class="alerts" id="alertsTop"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 記録 -->
+    <section data-panel="log" hidden>
+      <h2>みんなの記録</h2>
+      <p class="lead">9人のコーチが書いた気づきを日付順に。</p>
+      <div class="searchbar">
+        <input type="search" id="flt-q" placeholder="ことばで検索" aria-label="ことばで検索">
+        <button class="btn ghost" type="button" id="fltToggle" aria-expanded="false">絞り込み</button>
+      </div>
+      <div class="quick" id="quickCoach"></div>
+      <div class="filters" id="filterBox" hidden>
+        <select id="flt-coach" aria-label="書いた人"></select>
+        <select id="flt-subject" aria-label="対象"></select>
+        <select id="flt-cat" aria-label="分野"></select>
+        <select id="flt-signal" aria-label="変化"></select>
+        <select id="flt-player" aria-label="選手"></select>
+        <button class="btn ghost" type="button" id="flt-clear">条件を解除</button>
+      </div>
+      <div id="rangeChip"></div>
+      <p class="result-count" id="resultCount"></p>
+      <div id="timelineList"></div>
+    </section>
+
+    <!-- まとめ -->
+    <section data-panel="summary" hidden>
+      <div class="stack">
+        <div class="period">
+          <div class="segbar" role="group" aria-label="まとめる単位">
+            <button type="button" data-mode="week" aria-pressed="true">週ごと</button>
+            <button type="button" data-mode="month" aria-pressed="false">月ごと</button>
+          </div>
+          <div class="pnav">
+            <button type="button" id="pPrev" aria-label="前の期間">‹</button>
+            <div class="plabel"><strong id="pLabel"></strong><span id="pSub"></span></div>
+            <button type="button" id="pNext" aria-label="次の期間">›</button>
+          </div>
+        </div>
+        <div class="tiles" id="sumTiles"></div>
+        <div class="panel" id="aiPanel">
+          <div class="sec-head"><h3>この期間のまとめ</h3></div>
+          <div id="aiBody"></div>
+        </div>
+        <div id="nowAlertsWrap">
+          <h3>先回りのサイン（今日時点）</h3>
+          <ul class="alerts" id="alertsAll"></ul>
+        </div>
+        <div class="panel">
+          <h3>書いたコーチ</h3>
+          <div class="bars" id="sumCoaches"></div>
+        </div>
+        <div class="panel">
+          <h3>分野ごとの変化</h3>
+          <div class="bars" id="sumCats"></div>
+          <div class="legend"><span><i style="background:var(--good)"></i>良い兆し</span><span><i style="background:var(--flat);opacity:.5"></i>いつも通り</span><span><i style="background:var(--concern)"></i>気になる</span></div>
+        </div>
+        <div>
+          <div class="sec-head"><h3>気になる記録</h3><span id="moreDown"></span></div>
+          <ul class="notes" id="sumDown"></ul>
+        </div>
+        <div>
+          <div class="sec-head"><h3>良い兆し</h3><span id="moreUp"></span></div>
+          <ul class="notes" id="sumUp"></ul>
+        </div>
+        <div class="panel">
+          <h3>選手・スタッフのうごき</h3>
+          <div class="bars" id="sumPlayers"></div>
+          <p class="nosee" id="sumNoSee"></p>
+        </div>
+        <div class="panel">
+          <h3>直近6週　分野 × 週の「気になる」</h3>
+          <div class="scroll-x"><table class="heat" id="heat"></table></div>
+          <div class="legend"><span>数字＝気になるの件数</span><span class="up-t">↑n＝良い兆し</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 選手 -->
+    <section data-panel="players" hidden>
+      <h2>選手・スタッフごとの変化</h2>
+      <div class="segbar" role="group" aria-label="表示する人" style="margin:10px 0 14px"><button type="button" data-prole="player" aria-pressed="true">選手</button><button type="button" data-prole="staff" aria-pressed="false">スタッフ</button></div>
+      <p class="lead">記録が空いている選手ほど上に並びます。点は直近の記録（右が新しい）。</p>
+      <form class="player-add" id="playerAdd">
+        <input type="text" id="f-addplayer" placeholder="選手の名前" aria-label="追加する人の名前">
+        <button class="btn" type="submit">追加</button>
+      </form>
+      <div class="players" id="playerCards"></div>
+    </section>
+
+    <!-- 振り返り -->
+    <section data-panel="reflect" hidden>
+      <div class="segbar five" role="group" aria-label="振り返りの表示">
+        <button type="button" data-rview="write" aria-pressed="true">今週</button>
+        <button type="button" data-rview="feed" aria-pressed="false">みんな</button>
+        <button type="button" data-rview="person" aria-pressed="false">人ごと</button>
+        <button type="button" data-rview="cards" aria-pressed="false">学び</button>
+        <button type="button" data-rview="month" aria-pressed="false">月まとめ</button>
+      </div>
+
+      <div class="rv" data-rv="write">
+        <div class="quick" id="rWeekPick" style="margin:0"></div>
+        <div id="rResurface"></div>
+        <form class="note-form panel" id="rForm" novalidate>
+          <h2 id="rTitle" style="font-size:17px">今週の振り返り</h2>
+          <div id="rPrev"></div>
+          <label class="field" for="r-good"><span class="label"><span class="gm-tag g">Good</span>うまくいったこと・続けたいこと</span>
+            <textarea id="r-good" name="good" placeholder="例：ドリルの前に目的を一言で伝えたら、学生の動きがそろった"></textarea>
+          </label>
+          <label class="field" for="r-more"><span class="label"><span class="gm-tag m">More</span>もっとこうしたかったこと</span>
+            <textarea id="r-more" name="more" placeholder="例：ミスした学生への声かけが遅れた。すぐ近くに行けばよかった"></textarea>
+          </label>
+          <div class="field"><span class="label"><span class="gm-tag t">Next</span>来週の目標（ネクストアクション）</span>
+            <div class="lrows" id="rTryRows"></div>
+            <button type="button" class="addrow" data-addrow="t">＋ 目標を追加</button>
+          </div>
+          <div class="field"><span class="label">📌 学び <span class="hint">（任意・1つ一文で。学びカードとして貯まります）</span></span>
+            <div class="lrows" id="rLearnRows"></div>
+            <button type="button" class="addrow" data-addrow="l">＋ 学びを追加</button>
+          </div>
+          <details class="more" id="rMemoBox"><summary>自由メモを書く</summary>
+            <textarea id="r-text" name="text" aria-label="自由メモ" placeholder="Good / More に入らないこと、感じたことなど自由に。"></textarea>
+          </details>
+          <div class="actions">
+            <button class="btn primary block" type="submit" id="rSave">振り返りを公開する</button>
+            <span class="form-msg" id="rMsg" role="status"></span>
+          </div>
+        </form>
+        <details class="more" id="rMaterial"><summary id="rMaterialSum">この週の自分の気づき</summary><ul class="notes" id="rMaterialList"></ul></details>
+        <details class="more"><summary>気づきから出たアクション</summary>
+          <div class="panel">
+            <h3>これから試すこと</h3><div id="todoOpen"></div>
+            <h3 style="margin-top:18px">試したこと</h3><div id="todoDone"></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="rv" data-rv="feed" hidden>
+        <div class="quick" id="rFeedScope" style="margin:0"></div>
+        <div class="rv" id="rFeed"></div>
+      </div>
+
+      <div class="rv" data-rv="person" hidden>
+        <div class="chips" id="rPersonPick"></div>
+        <div class="tiles" id="rPersonTiles"></div>
+        <div id="rPersonPrinciples"></div>
+        <div class="rv" id="rPersonList"></div>
+      </div>
+
+      <div class="rv" data-rv="cards" hidden>
+        <p class="lead" style="margin:0">📌の学びが貯まります。試したら「試した」、効果があったら「効いた」。効いた学びが<b>指導の原則</b>になります。</p>
+        <div class="quick" id="rCardScope" style="margin:0"></div>
+        <div class="rv" id="rCards"></div>
+      </div>
+
+      <div class="rv" data-rv="month" hidden>
+        <div class="pnav">
+          <button type="button" id="rmPrev" aria-label="前の月">‹</button>
+          <div class="plabel"><strong id="rmLabel"></strong><span id="rmSub"></span></div>
+          <button type="button" id="rmNext" aria-label="次の月">›</button>
+        </div>
+        <div class="tiles" id="rmTiles"></div>
+        <div class="panel"><div class="sec-head"><h3>みんなの振り返りから見えること</h3></div><div id="rmAI"></div></div>
+        <div><h3>この月の学び</h3><div class="lgroup" id="rmLearnings"></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="bnav" role="tablist" aria-label="画面の切り替え">
+  <button role="tab" data-tab="write" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>書く</button>
+  <button role="tab" data-tab="log" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r=".8"/><circle cx="4" cy="12" r=".8"/><circle cx="4" cy="18" r=".8"/></svg>記録</button>
+  <button role="tab" data-tab="summary" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>まとめ<span class="badge" id="alertBadge" hidden></span></button>
+  <button role="tab" data-tab="players" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.2a3 3 0 010 5.6M18 14.5c1.8.8 3 2.8 3 5.5"/></svg>部員</button>
+  <button role="tab" data-tab="reflect" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0012 3z"/></svg>振り返り<span class="badge" id="rBadge" hidden>未</span></button>
+</nav>
+
+<div class="sheet" id="meSheet" hidden>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="meTitle">
+    <h2 id="meTitle">あなたは誰ですか？</h2>
+    <p class="lead" id="meLead">書いた気づきに名前が付きます。この端末で覚えておきます。</p>
+    <div class="names" id="meNames"></div>
+    <form class="player-add" id="coachAdd">
+      <input type="text" id="f-addcoach" placeholder="一覧にない名前を追加" aria-label="コーチの名前">
+      <button class="btn ghost" type="submit">追加</button>
+    </form>
+    <button class="btn ghost block" type="button" id="meClose">閉じる</button>
+  </div>
+</div>
+<div class="sheet" id="copySheet" hidden>
+  <div class="sheet-panel copy-box" role="dialog" aria-modal="true" aria-labelledby="copyTitle">
+    <h2 id="copyTitle">まとめ用の文章</h2>
+    <p class="lead" id="copyLead">下の文章をすべてコピーして、claude.ai の新しいチャットに貼り付けてください。</p>
+    <textarea id="copyText" readonly aria-label="まとめ用の文章"></textarea>
+    <div class="ai-tools"><button class="btn primary" type="button" id="copyAgain">コピーする</button><button class="btn ghost" type="button" id="copyClose">閉じる</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const CATS=["技術","戦術","メンタル","コンディション","コミュニケーション","その他"];
+const SCENES=["練習","試合","ミーティング","その他"];
+const SUBJECTS={player:"選手",staff:"スタッフ",team:"チーム全体",coach:"自分（コーチ）"};
+const ROLE={player:"選手",staff:"スタッフ"};
+const isPerson=n=>n.subject==="player"||n.subject==="staff";
+const SIGNALS={up:{label:"良い兆し",sym:"↑"},flat:{label:"いつも通り",sym:"→"},down:{label:"気になる",sym:"↓"}};
+const WD="日月火水木金土";
+const EMPTY_FILTERS={q:"",coach:"",subject:"",cat:"",signal:"",player:"",from:"",to:""};
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+const ymd=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parse=s=>{const[y,m,d]=String(s).split("-").map(Number);return new Date(y,(m||1)-1,d||1)};
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return ymd(d)};
+const diffDays=(a,b)=>Math.round((parse(a)-parse(b))/864e5);
+const today=()=>ymd(new Date());
+const fmtDay=s=>{const d=parse(s);return `${d.getMonth()+1}月${d.getDate()}日（${WD[d.getDay()]}）`};
+const fmtShort=s=>{const d=parse(s);return `${d.getMonth()+1}/${d.getDate()}`};
+const weekStart=s=>{const d=parse(s);d.setDate(d.getDate()-(d.getDay()+6)%7);return ymd(d)};
+const LS={get(k){try{return localStorage.getItem(k)}catch(_){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(_){}}};
+
+const state={
+  status:"connecting", db:null, sample:null, readOnly:false,
+  realNotes:[], realPlayers:[], pRole:"player", coaches:[], summaries:{},
+  loaded:{notes:false,players:false},
+  me:LS.get("kizuki.me")||"", editingId:null, formPlayer:"",
+  filters:{...EMPTY_FILTERS}, sum:{mode:"week",offset:0},
+  aiJobs:{}, memoEdit:null, pass:LS.get("kizuki.pass")||"",
+  realRefl:[], rview:"write", rPerson:"", rWeekOffset:0, rFeedMine:false, rCardMine:false, rMonthOffset:0, rFormKey:null
+};
+const RX=[["clap","👏","いいね"],["idea","💡","学びになった"],["try","🙌","やってみる"]];
+const nkey=s=>[...new TextEncoder().encode(String(s))].map(b=>b.toString(16).padStart(2,"0")).join("").slice(0,180);
+const unkey=h=>{try{return new TextDecoder().decode(new Uint8Array((h.match(/../g)||[]).map(x=>parseInt(x,16))))}catch(_){return ""}};
+
+/* ---------- sample (only while nothing is saved) ---------- */
+const SAMPLE=(()=>{
+  const t=today();
+  const n=(off,o)=>({id:"sample-"+off,sample:true,coach:"サンプル",date:addDays(t,-off),createdAt:Date.now()-off*864e5,player:"",nextAction:"",actionDone:false,...o});
+  return {notes:[
+    n(1,{scene:"練習",subject:"player",player:"選手A",cats:["メンタル"],signal:"down",text:"ミスの後に声が止まる時間が長かった。先週より表情が硬い。",nextAction:"練習後に5分だけ話を聞く"}),
+    n(2,{scene:"練習",subject:"team",cats:["コミュニケーション"],signal:"up",text:"ディフェンスのスライドの声が下級生からも出るようになってきた。"}),
+    n(3,{scene:"練習",subject:"coach",cats:["戦術"],signal:"flat",good:"ドリルの目的を最初に伝えたら、学生の集中が続いた。",more:"説明が長くなって回転が落ちた。1ドリル1ポイントに絞りたい。",nextAction:"次回はホワイトボードで30秒以内に説明する"}),
+    n(4,{scene:"練習",subject:"staff",player:"スタッフA",cats:["コミュニケーション"],signal:"up",text:"練習メニューの準備を先回りして、コーチに確認しに来てくれた。役割に慣れてきた。"}),
+    n(5,{scene:"試合",subject:"player",player:"選手B",cats:["技術"],signal:"up",text:"逆手のシュートを試合で初めて決めた。自主練の成果が出ている。"}),
+    n(6,{scene:"練習",subject:"player",player:"選手A",cats:["メンタル","コンディション"],signal:"down",text:"睡眠不足と話していた。試験期間と重なっている様子。"}),
+    n(8,{scene:"練習",subject:"team",cats:["コンディション"],signal:"down",text:"ハムストリングの張りを訴える選手が3人。走り込みの量を見直したい。",nextAction:"来週のフィットネスメニューを2割減らす"}),
+    n(10,{scene:"ミーティング",subject:"coach",cats:["コミュニケーション"],signal:"flat",good:"学生に先に意見を出してもらう順番にしたら、発言が増えた。",more:"時間が押して、最後のまとめが駆け足になった。",nextAction:"試合後の振り返りでも同じ順番を試す",actionDone:true}),
+    n(12,{scene:"練習",subject:"player",player:"選手C",cats:["戦術"],signal:"up",text:"ライドの判断が早くなった。周りを見てから動けている。"}),
+    n(16,{scene:"試合",subject:"team",cats:["メンタル"],signal:"down",text:"先制された後に下を向く選手が多かった。"}),
+    n(20,{scene:"練習",subject:"player",player:"選手D",cats:["コンディション"],signal:"flat",text:"足首の捻挫から復帰。まだ切り返しを怖がっている。"}),
+    n(24,{scene:"練習",subject:"team",cats:["メンタル"],signal:"up",text:"1年生が練習前の準備を自分たちで回し始めた。"})
+  ],players:["選手A","選手B","選手C","選手D","選手E","スタッフA"]};
+})();
+const gmText=(g,m)=>[g&&"Good："+g,m&&"More："+m].filter(Boolean).join(String.fromCharCode(10));
+const isSample=()=>state.status!=="ready"||state.realNotes.length===0;
+
+function allNotes(){
+  const src=isSample()?SAMPLE.notes:state.realNotes;
+  return src.map(n=>{const o={cats:[],signal:"flat",subject:"team",scene:"練習",coach:"",player:"",nextAction:"",text:"",good:"",more:"",...n};
+      if(!o.text&&(o.good||o.more))o.text=gmText(o.good,o.more);return o})
+    .sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:(b.createdAt||0)-(a.createdAt||0));
+}
+function uniq(a){return [...new Set(a.filter(Boolean))]}
+function roleOf(name){
+  const p=state.realPlayers.find(x=>x.name===name);if(p)return p.role==="staff"?"staff":"player";
+  const n=(isSample()?SAMPLE.notes:state.realNotes).find(x=>isPerson(x)&&x.player===name);return n?.subject==="staff"?"staff":"player";
+}
+function realPlayerNames(role){return uniq([...state.realPlayers.map(p=>p.name),...state.realNotes.filter(isPerson).map(n=>n.player)]).filter(n=>!role||roleOf(n)===role)}
+const personLabel=name=>roleOf(name)==="staff"?name+"（スタッフ）":name;
+function playerNames(notes){
+  const base=state.realPlayers.length?state.realPlayers.map(p=>p.name):(isSample()?SAMPLE.players:[]);
+  return uniq([...base,...notes.filter(isPerson).map(n=>n.player)]);
+}
+function coachNames(notes){return uniq([...state.coaches,...notes.map(n=>n.coach)])}
+
+/* ---------- 先回りのサイン ---------- */
+function computeAlerts(notes,names){
+  const t=today(),out=[],age=n=>diffDays(t,n.date);
+  const R=notes.filter(n=>age(n)>=0&&age(n)<14),P=notes.filter(n=>age(n)>=14&&age(n)<28);
+  CATS.forEach(c=>{
+    const r=R.filter(n=>n.cats.includes(c)&&n.signal==="down").length,p=P.filter(n=>n.cats.includes(c)&&n.signal==="down").length;
+    if(r>=2&&r>p)out.push({level:"concern",title:`${c}の「気になる」が増えています`,detail:`直近14日 ${r}件（その前の14日 ${p}件）`,go:{tab:"log",filters:{cat:c,signal:"down"}}});
+    const rg=R.filter(n=>n.cats.includes(c)&&n.signal==="up").length,pg=P.filter(n=>n.cats.includes(c)&&n.signal==="up").length;
+    if(rg>=2&&rg>pg)out.push({level:"good",title:`${c}で良い兆しが増えています`,detail:`直近14日 ${rg}件（その前の14日 ${pg}件）。何が効いたかを残しておくと再現できます。`,go:{tab:"log",filters:{cat:c,signal:"up"}}});
+  });
+  const teamDown=R.filter(n=>n.subject==="team"&&n.signal==="down").length;
+  if(teamDown>=3)out.push({level:"concern",title:"チーム全体の「気になる」が続いています",detail:`直近14日で ${teamDown}件`,go:{tab:"log",filters:{subject:"team",signal:"down"}}});
+  names.forEach(name=>{
+    const pn=notes.filter(n=>isPerson(n)&&n.player===name),label=personLabel(name);
+    if(pn.length>=2&&pn[0].signal==="down"&&pn[1].signal==="down")
+      out.push({level:"concern",title:`${label}：「気になる」が続いています`,detail:`${fmtShort(pn[0].date)} ${pn[0].coach?pn[0].coach+"：":""}${pn[0].text.slice(0,44)}${pn[0].text.length>44?"…":""}`,go:{tab:"log",filters:{player:name}}});
+    const days=pn.length?diffDays(t,pn[0].date):null;
+    if(days===null)out.push({level:"watch",title:`${label}：まだ記録がありません`,detail:"見えていない変化があるかもしれません。",go:{tab:"write",player:name,role:roleOf(name)}});
+    else if(days>=14)out.push({level:"watch",title:`${label}：${days}日間 記録がありません`,detail:"最近の様子を意識して見てみましょう。",go:{tab:"write",player:name,role:roleOf(name)}});
+  });
+  const stale=notes.filter(n=>n.nextAction&&!n.actionDone&&age(n)>=7);
+  if(stale.length)out.push({level:"watch",title:`1週間以上前のアクションが ${stale.length}件 残っています`,detail:stale.slice(0,2).map(n=>n.nextAction).join(" / "),go:{tab:"reflect"}});
+  const rank={concern:0,watch:1,good:2};
+  return out.sort((a,b)=>rank[a.level]-rank[b.level]);
+}
+
+/* ---------- pieces ---------- */
+function noteItem(n,opts={}){
+  const s=SIGNALS[n.signal]||SIGNALS.flat;
+  const who=n.subject==="player"?esc(n.player||"選手"):n.subject==="staff"?esc((n.player||"")+"（スタッフ）"):esc(SUBJECTS[n.subject]||"");
+  const canEdit=!n.sample&&!opts.noTools&&state.db&&!state.readOnly;
+  const isGM=n.subject==="coach"&&(n.good||n.more);
+  return `<li class="note">
+    <div class="note-meta">${opts.showDate!==false?`<span class="mono">${fmtShort(n.date)}</span>`:""}<span class="who">${who}</span>${n.subject==="coach"?'<span class="pill" style="color:var(--ink-2)">振り返り</span>':`<span class="pill pill-${n.signal}">${s.sym} ${s.label}</span>`}${n.cats.map(c=>`<span class="cat">${esc(c)}</span>`).join("")}<span>${esc(n.scene)}</span>${n.coach?`<span class="by">✎ ${esc(n.coach)}</span>`:""}${n.sample?'<span class="sample-tag">サンプル</span>':""}</div>
+    ${isGM?`<div class="gm">${n.good?`<p><span class="gm-tag g">Good</span>${esc(n.good)}</p>`:""}${n.more?`<p><span class="gm-tag m">More</span>${esc(n.more)}</p>`:""}</div>`:`<p class="note-text">${esc(n.text)}</p>`}
+    ${n.nextAction?`<p class="note-action${n.actionDone?" done":""}"><span>${n.subject==="coach"?"来週の目標":"次のアクション"}</span>${esc(n.nextAction)}</p>`:""}
+    ${canEdit?`<div class="note-tools"><button class="link" data-edit="${esc(n.id)}">編集</button><button class="link danger" data-del="${esc(n.id)}">削除</button></div>`:""}
+  </li>`;
+}
+function alertItem(a){
+  const mark=a.level==="concern"?"!":a.level==="good"?"↑":"?";
+  const label=a.go?.tab==="write"?"気づきを書く":a.go?.tab==="reflect"?"確認する":"記録を見る";
+  return `<li class="alert lv-${a.level}"><span class="alert-mark" aria-hidden="true">${mark}</span><div><strong>${esc(a.title)}</strong><p>${esc(a.detail)}</p>${a.go?`<button class="link" data-go='${esc(JSON.stringify(a.go))}'>${label} ›</button>`:""}</div></li>`;
+}
+const goAttr=g=>`data-go='${esc(JSON.stringify(g))}'`;
+
+/* ---------- render ---------- */
+function render(){
+  const notes=allNotes(),names=playerNames(notes),alerts=computeAlerts(notes,names);
+
+  const b=$("#banner");
+  if(state.status==="connecting"){b.hidden=false;b.innerHTML="データを読み込んでいます…";}
+  else if(state.status==="unavailable"){b.hidden=false;b.innerHTML="<strong>読み込めませんでした。</strong>通信状況を確認して、ページを開き直してください。";}
+  else if(state.readOnly){b.hidden=false;b.innerHTML="<strong>保存できませんでした。</strong>ページを開き直してください。";}
+  else if(isSample()){b.hidden=false;b.innerHTML="<strong>サンプル表示中です。</strong>最初の気づきを記録するとサンプルは消えます。";}
+  else b.hidden=true;
+
+  $("#meName").textContent=state.me||"名前を選ぶ";
+  $("#meAv").textContent=state.me?state.me.slice(0,1):"?";
+  const concernN=alerts.filter(a=>a.level==="concern").length;
+  const ab=$("#alertBadge");ab.hidden=!concernN;ab.textContent=concernN;
+
+  renderPlayerChips();
+  $("#alertsTop").innerHTML=alerts.length?alerts.slice(0,3).map(alertItem).join(""):`<li class="empty">今のところ、目立つ変化はありません。</li>`;
+  renderLog(notes,names);
+  renderSummary(notes,names,alerts);
+  renderPlayers(notes,names);
+  renderReflect(notes);
+  $("#rBadge").hidden=!(state.me&&state.status==="ready"&&!allRefl().some(r=>!r.sample&&r.coach===state.me&&r.week===weekStart(today())));
+  const busy=!state.db||state.readOnly;
+  $("#saveBtn").disabled=busy;
+  $("#playerAdd button").disabled=busy;
+}
+
+function renderPlayerChips(){
+  const role=form.elements.subject?.value==="staff"?"staff":"player";
+  const names=realPlayerNames(role);
+  $("#playerChips").innerHTML=names.length?names.map(n=>`<label class="chip"><input type="radio" name="player" value="${esc(n)}"${n===state.formPlayer?" checked":""}>${esc(n)}</label>`).join(""):`<span class="hint" style="font-size:13px">まだ登録がありません。下の欄に名前を入力してください。</span>`;
+}
+
+function fillSelect(sel,allLabel,opts,val){
+  sel.innerHTML=`<option value="">${allLabel}</option>`+opts.map(([v,l])=>`<option value="${esc(v)}">${esc(l)}</option>`).join("");
+  sel.value=opts.some(([v])=>v===val)?val:"";
+}
+function renderLog(notes,names){
+  const f=state.filters,coaches=coachNames(notes);
+  $("#quickCoach").innerHTML=[["","全員"],...(state.me?[[state.me,"自分だけ"]]:[])].map(([v,l])=>`<label class="chip"><input type="radio" name="qc" value="${esc(v)}"${f.coach===v?" checked":""}>${l}</label>`).join("");
+  fillSelect($("#flt-coach"),"書いた人：全員",coaches.map(c=>[c,c]),f.coach);
+  fillSelect($("#flt-subject"),"対象：すべて",Object.entries(SUBJECTS).filter(([k])=>k!=="coach"),f.subject);
+  fillSelect($("#flt-cat"),"分野：すべて",CATS.map(c=>[c,c]),f.cat);
+  fillSelect($("#flt-signal"),"変化：すべて",Object.entries(SIGNALS).map(([k,v])=>[k,v.sym+" "+v.label]),f.signal);
+  fillSelect($("#flt-player"),"選手・スタッフ：すべて",names.map(n=>[n,n]),f.player);
+  if(document.activeElement!==$("#flt-q"))$("#flt-q").value=f.q;
+  $("#rangeChip").innerHTML=f.from?`<span class="active-range">期間 ${fmtShort(f.from)}〜${fmtShort(f.to)}<button type="button" id="clearRange" aria-label="期間の絞り込みを外す">×</button></span>`:"";
+  const q=f.q.trim().toLowerCase();
+  notes=notes.filter(n=>n.subject!=="coach");
+  const list=notes.filter(n=>(!f.coach||n.coach===f.coach)&&(!f.subject||n.subject===f.subject)&&(!f.cat||n.cats.includes(f.cat))&&(!f.signal||n.signal===f.signal)&&(!f.player||n.player===f.player)&&(!f.from||(n.date>=f.from&&n.date<=f.to))&&(!q||(n.text+" "+n.nextAction+" "+n.player+" "+n.coach).toLowerCase().includes(q)));
+  const nActive=["subject","cat","signal","player"].filter(k=>f[k]).length+(f.coach&&f.coach!==state.me?1:0);
+  $("#fltToggle").textContent=nActive?`絞り込み（${nActive}）`:"絞り込み";
+  const active=Object.values(f).some(Boolean);
+  $("#resultCount").textContent=active?`${list.length}件 / 全${notes.length}件`:`全${notes.length}件`;
+  if(!list.length){$("#timelineList").innerHTML=`<p class="empty">${active?"条件に合う記録はありません。":"まだ記録がありません。"}</p>`;return}
+  let html="",cur=null;
+  list.forEach(n=>{if(n.date!==cur){if(cur)html+="</ul>";html+=`<h4 class="day">${fmtDay(n.date)}</h4><ul class="notes">`;cur=n.date}html+=noteItem(n,{showDate:false})});
+  $("#timelineList").innerHTML=html+"</ul>";
+}
+
+/* ---------- まとめ ---------- */
+function periodOf(mode,offset){
+  if(mode==="week"){
+    const from=addDays(weekStart(today()),7*offset),to=addDays(from,6);
+    const name=offset===0?"今週":offset===-1?"先週":`${-offset}週前`;
+    return {mode,from,to,key:"w-"+from,label:`${fmtShort(from)}（月）〜 ${fmtShort(to)}（日）`,name,prevFrom:addDays(from,-7),prevTo:addDays(from,-1),unit:"前週"};
+  }
+  const d=new Date();const s=new Date(d.getFullYear(),d.getMonth()+offset,1),e=new Date(s.getFullYear(),s.getMonth()+1,0),ps=new Date(s.getFullYear(),s.getMonth()-1,1),pe=new Date(s.getFullYear(),s.getMonth(),0);
+  return {mode,from:ymd(s),to:ymd(e),key:"m-"+ymd(s).slice(0,7),label:`${s.getFullYear()}年${s.getMonth()+1}月`,name:offset===0?"今月":offset===-1?"先月":`${-offset}か月前`,prevFrom:ymd(ps),prevTo:ymd(pe),unit:"前月"};
+}
+const inRange=(n,a,b)=>n.date>=a&&n.date<=b;
+function sigBar(list,max){
+  const c=k=>list.filter(n=>n.signal===k).length,w=v=>max?(v/max*100).toFixed(1)+"%":"0";
+  return `<div class="bar-track"><i class="b-up" style="width:${w(c("up"))}"></i><i class="b-flat" style="width:${w(c("flat"))}"></i><i class="b-down" style="width:${w(c("down"))}"></i></div>`;
+}
+function renderSummary(notes,names,alerts){
+  const p=periodOf(state.sum.mode,state.sum.offset);
+  document.querySelectorAll(".segbar button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mode===state.sum.mode));
+  $("#pLabel").textContent=p.name;$("#pSub").textContent=p.label;
+  $("#pNext").disabled=state.sum.offset>=0;
+  const L=notes.filter(n=>inRange(n,p.from,p.to)),PV=notes.filter(n=>inRange(n,p.prevFrom,p.prevTo));
+  const cnt=(a,s)=>s?a.filter(n=>n.signal===s).length:a.length;
+  const tile=(k,a,b,cls)=>{const d=a-b;return `<div class="tile"><div class="k">${k}</div><div class="v ${cls||""}">${a}</div><div class="d">${p.unit} ${b}（${d>0?"+":""}${d}）</div></div>`};
+  $("#sumTiles").innerHTML=tile("記録",cnt(L),cnt(PV))+tile("気になる",cnt(L,"down"),cnt(PV,"down"),"down-t")+tile("良い兆し",cnt(L,"up"),cnt(PV,"up"),"up-t");
+
+  $("#aiBody").innerHTML=aiSection(p.key,L.length,()=>buildPrompt(p,L),"この期間の記録 "+L.length+"件 を、全員で読める振り返りメモにまとめます。","この期間の記録はまだありません。",isSample());
+
+  $("#nowAlertsWrap").hidden=state.sum.offset!==0;
+  $("#alertsAll").innerHTML=alerts.length?alerts.map(alertItem).join(""):`<li class="empty">今のところ、目立つ変化はありません。</li>`;
+
+  const coaches=coachNames(notes);
+  const cMax=Math.max(1,...coaches.map(c=>L.filter(n=>n.coach===c).length));
+  $("#sumCoaches").innerHTML=coaches.length?coaches.map(c=>{const k=L.filter(n=>n.coach===c).length;return `<div class="bar-row"><span class="nm${k?"":" zero"}">${esc(c)}</span><div class="bar-track"><i class="b-all" style="width:${(k/cMax*100).toFixed(1)}%"></i></div><span class="ct">${k||"—"}</span></div>`}).join(""):`<p class="empty">まだ誰も書いていません。</p>`;
+
+  const catMax=Math.max(1,...CATS.map(c=>L.filter(n=>n.cats.includes(c)).length));
+  $("#sumCats").innerHTML=CATS.map(c=>{const l=L.filter(n=>n.cats.includes(c));return `<div class="bar-row"><span class="nm${l.length?"":" zero"}">${c}</span>${sigBar(l,catMax)}<span class="ct">${l.length||"—"}</span></div>`}).join("");
+
+  const range={from:p.from,to:p.to};
+  const listBlock=(sig,el,more)=>{const l=L.filter(n=>n.signal===sig);$(el).innerHTML=l.length?l.slice(0,4).map(n=>noteItem(n,{noTools:true})).join(""):`<li class="empty">この期間はありません。</li>`;$(more).innerHTML=l.length>4?`<button class="link" ${goAttr({tab:"log",filters:{signal:sig,...range}})}>全${l.length}件 ›</button>`:""};
+  listBlock("down","#sumDown","#moreDown");listBlock("up","#sumUp","#moreUp");
+
+  const pl=names.map(nm=>({nm,l:L.filter(n=>isPerson(n)&&n.player===nm)})).filter(x=>x.l.length).sort((a,b)=>b.l.length-a.l.length);
+  const pMax=Math.max(1,...pl.map(x=>x.l.length));
+  $("#sumPlayers").innerHTML=pl.length?pl.map(x=>`<div class="bar-row"><span class="nm">${esc(x.nm)}${roleOf(x.nm)==="staff"?'<span class="hint" style="font-size:11px">（ス）</span>':""}</span>${sigBar(x.l,pMax)}<span class="ct">${x.l.length}</span></div>`).join(""):`<p class="empty">この期間の選手の記録はありません。</p>`;
+  const unseen=names.filter(nm=>!pl.some(x=>x.nm===nm));
+  $("#sumNoSee").innerHTML=unseen.length?`<b>この期間に記録がない選手・スタッフ（${unseen.length}人）</b>：${unseen.map(n=>esc(personLabel(n))).join("、")}`:"";
+
+  const w0=weekStart(today()),weeks=[];for(let i=5;i>=0;i--)weeks.push(addDays(w0,-7*i));
+  let h=`<thead><tr><th></th>${weeks.map((w,i)=>`<th>${i===5?"今週":fmtShort(w)}</th>`).join("")}</tr></thead><tbody>`;
+  CATS.forEach(c=>{h+=`<tr><th class="rowh" scope="row">${c}</th>`;weeks.forEach(w=>{const iw=notes.filter(n=>n.cats.includes(c)&&inRange(n,w,addDays(w,6)));const d=cnt(iw,"down"),g=cnt(iw,"up");const bg=d>=3?"var(--concern)":d?`color-mix(in srgb,var(--concern) ${d===1?28:45}%,var(--surface))`:"var(--sunk)";h+=`<td class="${d>=3?"hot":""}" style="background:${bg}">${d||""}${g?`<span class="g">↑${g}</span>`:""}</td>`});h+="</tr>"});
+  $("#heat").innerHTML=h+"</tbody>";
+}
+
+/* まとめメモ（claude.ai に貼ってまとめる） */
+function aiSection(key,count,builder,introText,emptyText,blocked){
+  state.aiJobs[key]={builder,count};
+  const saved=state.summaries[key];
+  let html="";
+  if(state.memoEdit===key){
+    html+=`<div class="memo-edit"><textarea id="memoText" aria-label="まとめメモ" placeholder="claude.ai で作ったまとめや、自分で書いたまとめを貼り付けてください。">${esc(saved?.text||"")}</textarea><div class="ai-tools"><button class="btn primary small" data-memosave="${key}">保存する</button><button class="btn ghost small" data-memocancel="1">やめる</button></div></div>`;
+    return html;
+  }
+  if(saved&&saved.text){
+    html+=`<p class="ai-out">${esc(saved.text)}</p><p class="ai-meta">${esc(saved.coach||"")}${saved.coach?"さんが":""}${saved.createdAt?fmtShort(ymd(new Date(saved.createdAt))):""}に保存 ・ ${saved.noteCount??"-"}件時点${saved.noteCount!=null&&count!==saved.noteCount?`<br><b>その後、件数が${count}件に変わっています。</b>`:""}</p>`;
+  }else{
+    html+=`<p class="nosee">${count?introText+"「まとめ用にコピー」を押して claude.ai に貼り付け、できたまとめを「まとめメモ」に保存すると全員が読めます。":emptyText}</p>`;
+  }
+  const can=count&&!blocked;
+  html+=`<div class="ai-tools">${can?`<button class="btn ghost small" data-copyprompt="${key}">まとめ用にコピー</button>`:""}${state.db&&!blocked?`<button class="btn ${saved?.text?"ghost":"primary"} small" data-memo="${key}">${saved?.text?"まとめメモを編集":"まとめメモを書く"}</button>`:""}</div>`;
+  return html;
+}
+function buildPrompt(p,L){
+  const rows=L.slice(0,220).map(n=>[n.date,n.coach||"不明",n.scene,isPerson(n)?SUBJECTS[n.subject]+":"+n.player:SUBJECTS[n.subject],n.cats.join("・")||"-",SIGNALS[n.signal]?.label||"",n.text.replace(/\s+/g," ").slice(0,220),n.nextAction?n.nextAction.slice(0,100):"-"].join("｜")).join("\n");
+  return `あなたは学生ラクロスチームのコーチ陣の振り返りを手伝うアシスタントです。
+以下は ${p.name}（${p.from}〜${p.to}）に、コーチ${uniq(L.map(n=>n.coach)).length}人が記録した気づき${L.length}件です。コーチ全員で共有する振り返りメモにまとめてください。
+
+書き方:
+- 日本語のプレーンテキスト。Markdown記号（#, *, **）は使わない。
+- 次の見出しをこの順に使い、見出しの下は「・」で始まる短い箇条書き（各3つ以内）。該当がなければ「・特になし」。
+■ 全体の傾向
+■ 良い兆し
+■ 気になること・先回りしたいこと
+■ 選手・スタッフごとの変化
+■ コーチ自身の学び
+■ 次の期間に試すこと
+- 記録に書かれていないことは推測で書かない。選手名・コーチ名は記録どおりに書く。
+- 複数のコーチが同じ選手・同じ傾向に触れていれば、それを明記する。
+
+記録（日付｜書いた人｜場面｜対象｜分野｜変化｜気づき｜次のアクション）:
+${rows}`;
+}
+async function copyPrompt(key){
+  const job=state.aiJobs[key];if(!job)return;
+  const text=job.builder();
+  $("#copyText").value=text;
+  let ok=false;
+  try{await navigator.clipboard.writeText(text);ok=true}catch(_){ok=false}
+  $("#copyLead").textContent=ok?"コピーしました。claude.ai の新しいチャットに貼り付けて送信してください。":"下の文章をすべて選択してコピーし、claude.ai の新しいチャットに貼り付けてください。";
+  $("#copySheet").hidden=false;
+  if(!ok){const ta=$("#copyText");ta.focus();ta.select()}
+}
+async function saveMemo(key){
+  const text=($("#memoText")?.value||"").trim(),job=state.aiJobs[key];
+  try{await state.db.doc("summaries/"+key).set({text,noteCount:job?job.count:null,coach:state.me||"",createdAt:Date.now()});state.memoEdit=null;toast(text?"まとめメモを保存しました":"まとめメモを消しました");render()}
+  catch(e){toast(writeError(e))}
+}
+
+/* ---------- 選手 ---------- */
+function renderPlayers(notes,allNames){
+  const t=today(),role=state.pRole,lbl=ROLE[role];
+  document.querySelectorAll("[data-prole]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.prole===role));
+  $("#f-addplayer").placeholder=lbl+"の名前";
+  const names=allNames.filter(n=>roleOf(n)===role);
+  if(!names.length){$("#playerCards").innerHTML=`<p class="empty">${lbl}を追加すると、記録の間隔や変化の続き方が見えるようになります。</p>`;return}
+  const rows=names.map(name=>{
+    const pn=notes.filter(n=>isPerson(n)&&n.player===name),days=pn.length?diffDays(t,pn[0].date):null;
+    let flag="";
+    if(pn.length>=2&&pn[0].signal==="down"&&pn[1].signal==="down")flag=`<span class="flag concern">「気になる」が続いています</span>`;
+    else if(days===null)flag=`<span class="flag watch">まだ記録がありません</span>`;
+    else if(days>=14)flag=`<span class="flag watch">${days}日間 記録なし</span>`;
+    else if(pn.slice(0,3).filter(n=>n.signal==="up").length>=2)flag=`<span class="flag good">良い兆しが続いています</span>`;
+    const dots=pn.slice(0,10).reverse().map(n=>`<span class="dot ${n.signal}" title="${fmtShort(n.date)} ${SIGNALS[n.signal]?.label||""}"></span>`).join("")||`<span class="none">記録なし</span>`;
+    const writers=uniq(pn.map(n=>n.coach));
+    const rec=state.realPlayers.find(p=>p.name===name);
+    return {days,html:`<div class="pcard">
+      <div class="pcard-head"><strong>${esc(name)}</strong><span>${pn.length}件${days!==null?` ・ ${days===0?"今日":days+"日前"}`:""}</span></div>
+      <div class="dots">${dots}</div>${flag}
+      ${pn[0]?`<p class="last">${esc(pn[0].text)}</p>`:""}
+      ${writers.length?`<span class="hint" style="font-size:12px">見ているコーチ：${writers.map(esc).join("、")}</span>`:""}
+      <div class="pcard-tools"><button class="link" ${goAttr({tab:"write",player:name,role:roleOf(name)})}>気づきを書く</button>${pn.length?`<button class="link" ${goAttr({tab:"log",filters:{player:name}})}>記録を見る</button>`:""}${rec&&state.db&&!state.readOnly?`<button class="link danger" data-delplayer="${esc(rec.id)}">一覧から外す</button>`:""}</div></div>`};
+  });
+  rows.sort((a,b)=>(b.days===null?1e9:b.days)-(a.days===null?1e9:a.days));
+  $("#playerCards").innerHTML=rows.map(r=>r.html).join("");
+}
+
+/* ---------- 振り返り ---------- */
+const newId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const SAMPLE_REFL=(()=>{
+  const w=weekStart(today());
+  return [
+    {id:"sample-r1",sample:true,coach:"サンプル",week:w,good:"水曜のゲーム形式で黙って見守ったら、4年生が自分たちで声をかけ合っていた。",more:"試合前でつい細かく指示を出しすぎた。学生が判断する前に答えを言ってしまった。",text:"",
+      learnings:[{id:"a",text:"答えを言う前に3秒待つと、学生が先に動く",status:""},{id:"b",text:"試合前ほど指示を減らしたほうが、学生は落ち着く",status:""}],
+      nextTries:["ゲーム形式の最初の5分は口を出さない","試合前ミーティングは3点だけ伝える"],
+      prevResults:[{text:"ドリルの説明は30秒以内にする",result:"partial",note:"平日はできたが、試合前は長くなった"}],
+      reactions:{clap:{[nkey("サンプル2")]:true},idea:{[nkey("サンプル2")]:true}},comments:{c1:{coach:"サンプル2",text:"自分も同じ癖があります。来週まねしてみます。",at:Date.now()}},createdAt:Date.now()},
+    {id:"sample-r2",sample:true,coach:"サンプル",week:addDays(w,-28),good:"学生に先に意見を出してもらったら、下級生の発言が増えた。",more:"最後のまとめが駆け足になった。",text:"",
+      learnings:[{id:"c",text:"コーチが話す前に、学生に先に話してもらう",status:"worked"}],nextTries:["試合後の振り返りも学生から話す"],prevResults:[],reactions:{},comments:{},createdAt:Date.now()-28*864e5}
+  ];
+})();
+const reflSample=()=>state.status!=="ready"||state.realRefl.length===0;
+// older entries stored single learning / nextTry strings; normalize to lists
+function normRefl(r){
+  const L=Array.isArray(r.learnings)&&r.learnings.length?r.learnings.filter(l=>l&&l.text):(r.learning?[{id:"l0",text:r.learning,status:r.learningStatus||""}]:[]);
+  const T=Array.isArray(r.nextTries)&&r.nextTries.length?r.nextTries.filter(Boolean):(r.nextTry?[r.nextTry]:[]);
+  const P=Array.isArray(r.prevResults)?r.prevResults.filter(p=>p&&(p.result||p.note)):(r.prevResult?[{text:"",result:r.prevResult,note:r.prevNote||""}]:[]);
+  return {text:"",reactions:{},comments:{},...r,L,T,P};
+}
+function allRefl(){
+  const src=reflSample()?SAMPLE_REFL:state.realRefl;
+  return src.map(normRefl).sort((a,b)=>a.week<b.week?1:a.week>b.week?-1:(b.createdAt||0)-(a.createdAt||0));
+}
+const allLearnings=R=>R.flatMap(r=>r.L.map(l=>({r,l})));
+const PREV={done:"できた",partial:"一部できた",not:"できなかった"};
+const STATUS={tried:"試した",worked:"✓ 効いた"};
+const wkLabel=w=>`${fmtShort(w)}〜${fmtShort(addDays(w,6))}の週`;
+
+function renderReflect(notes){
+  document.querySelectorAll("[data-rview]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.rview===state.rview));
+  document.querySelectorAll("[data-rv]").forEach(s=>s.hidden=s.dataset.rv!==state.rview);
+  const R=allRefl();
+  renderRWrite(notes,R);renderRFeed(R);renderRPerson(notes,R);renderRCards(R);renderRMonth(R);
+}
+
+function myRefl(R,week){return R.find(r=>!r.sample&&r.coach===state.me&&r.week===week)}
+function rowHTML(kind,val,lid,status){
+  const ph=kind==="l"?"例：説明を短くすると、学生が自分で考え始める":"例：ミスの直後に、10秒以内で本人に一声かける";
+  return `<div class="lrow" data-kind="${kind}" data-lid="${esc(lid||"")}" data-status="${esc(status||"")}"><input type="text" value="${esc(val||"")}" placeholder="${ph}" aria-label="${kind==="l"?"学び":"来週の目標"}"><button type="button" class="rm" data-rmrow aria-label="この行を消す">×</button></div>`;
+}
+function addRow(kind,val){
+  const box=kind==="l"?$("#rLearnRows"):$("#rTryRows");
+  const empty=[...box.querySelectorAll("input")].find(i=>!i.value.trim());
+  if(empty&&val!==undefined){empty.value=val;return empty}
+  if(empty&&val===undefined){empty.focus();return empty}
+  box.insertAdjacentHTML("beforeend",rowHTML(kind,val||"",kind==="l"?newId():""));
+  const inp=box.lastElementChild.querySelector("input");return inp;
+}
+function renderRWrite(notes,R){
+  const w=addDays(weekStart(today()),7*state.rWeekOffset);
+  $("#rWeekPick").innerHTML=[[0,"今週"],[-1,"先週"]].map(([v,l])=>`<label class="chip"><input type="radio" name="rwk" value="${v}"${state.rWeekOffset===v?" checked":""}>${l}（${fmtShort(addDays(weekStart(today()),7*v))}〜）</label>`).join("");
+  const mine=myRefl(R,w);
+  const prev=R.filter(r=>r.coach===state.me&&r.week<w&&r.T.length)[0];
+  // resurface: one of my learnings from about 4 weeks before
+  const flat=allLearnings(R.filter(r=>r.week<=addDays(w,-14)));
+  const own=flat.filter(x=>x.r.coach===(state.me||"")&&!x.r.sample);
+  const pool=own.length?own:(reflSample()?flat:[]);
+  const target=addDays(w,-28);
+  const pick=pool.slice().sort((a,b)=>Math.abs(diffDays(a.r.week,target))-Math.abs(diffDays(b.r.week,target))||(a.l.status==="worked")-(b.l.status==="worked"))[0];
+  $("#rResurface").innerHTML=pick?`<div class="resurface"><div class="k">${Math.round(diffDays(w,pick.r.week)/7)}週間前の${pick.r.sample?"学び（サンプル）":"あなたの学び"}</div><blockquote>📌 ${esc(pick.l.text)}</blockquote><small>${wkLabel(pick.r.week)}</small>${statusRow(pick.r,pick.l)}<div class="ai-tools" style="margin-top:6px"><button class="link" style="padding-left:0" data-retry="${esc(pick.l.text)}">この学びを来週の目標に入れる ›</button></div></div>`:"";
+  const key=[state.me,w,mine?.id||"new",prev?.id||"",state.status].join("|");
+  if(state.rFormKey!==key&&!state.rDirty){
+    state.rFormKey=key;
+    $("#r-text").value=mine?.text||"";$("#rMemoBox").open=!!mine?.text;
+    $("#r-good").value=mine?.good||"";$("#r-more").value=mine?.more||"";
+    const L=mine?.L.length?mine.L:[{}],T=mine?.T.length?mine.T:[""];
+    $("#rLearnRows").innerHTML=L.map(l=>rowHTML("l",l.text,l.id||newId(),l.status)).join("");
+    $("#rTryRows").innerHTML=T.map(t=>rowHTML("t",t)).join("");
+    $("#rPrev").innerHTML=prev?`<div class="prev-box"><span class="k">前回（${wkLabel(prev.week)}）の来週の目標はどうだった？</span>${prev.T.map((t,i)=>{const p=(mine?.P||[]).find(x=>x.text===t)||{};return `<div class="prev-item" data-ptext="${esc(t)}"><span class="t">→ ${esc(t)}</span>
+      <div class="chips">${Object.entries(PREV).map(([k,v])=>`<label class="chip"><input type="radio" name="pr${i}" value="${k}"${p.result===k?" checked":""}>${v}</label>`).join("")}</div>
+      <input type="text" value="${esc(p.note||"")}" placeholder="どうだった？（任意・一言で）" aria-label="試した結果"></div>`}).join("")}</div>`:"";
+  }
+  $("#rTitle").textContent=`${state.rWeekOffset===0?"今週":"先週"}の振り返り（${wkLabel(w)}）`;
+  $("#rSave").textContent=mine?"振り返りを更新する":"振り返りを公開する";
+  $("#rSave").disabled=!state.db||state.readOnly;
+  const mn=notes.filter(n=>!n.sample&&n.coach===state.me&&inRange(n,w,addDays(w,6)));
+  $("#rMaterialSum").textContent=`この週の自分の気づき（${mn.length}件）`;
+  $("#rMaterialList").innerHTML=mn.length?mn.map(n=>noteItem(n,{noTools:true})).join(""):`<li class="empty">この週に書いた気づきはありません。</li>`;
+  // actions from notes
+  const acts=notes.filter(n=>n.nextAction&&(!state.me||n.coach===state.me||n.sample));
+  const item=n=>`<div class="todo${n.actionDone?" done":""}"><button class="check${n.actionDone?" on":""}" ${n.sample||state.readOnly||!state.db?"disabled":""} data-done="${esc(n.id)}" aria-pressed="${!!n.actionDone}" aria-label="${n.actionDone?"未完了に戻す":"試した"}">${n.actionDone?"✓":""}</button><div><p>${esc(n.nextAction)}</p><small>${fmtShort(n.date)} ・ ${esc(n.coach||"")} ・ ${isPerson(n)?esc(n.player):esc(SUBJECTS[n.subject]||"")}</small></div></div>`;
+  const open=acts.filter(n=>!n.actionDone),done=acts.filter(n=>n.actionDone);
+  $("#todoOpen").innerHTML=open.length?open.map(item).join(""):`<p class="empty">残っているアクションはありません。</p>`;
+  $("#todoDone").innerHTML=done.length?done.map(item).join(""):`<p class="empty">試したアクションはここに残ります。</p>`;
+}
+
+function statusRow(r,l){
+  if(r.sample||r.coach!==state.me||!state.db||state.readOnly)
+    return l.status?`<div class="status-row"><span class="stbtn ${l.status}" aria-pressed="true" style="cursor:default">${STATUS[l.status]}</span></div>`:"";
+  return `<div class="status-row">${[["tried","試した"],["worked","効いた"]].map(([k,t])=>`<button type="button" class="stbtn ${k}" data-lstatus="${k}" data-id="${esc(r.id)}" data-lid="${esc(l.id)}" aria-pressed="${l.status===k}">${l.status===k?"✓ ":""}${t}</button>`).join("")}</div>`;
+}
+function reflItem(r){
+  const canAct=!r.sample&&state.db&&!state.readOnly&&state.me;
+  const rx=RX.map(([k,emo,l])=>{const m=r.reactions?.[k]||{},who=Object.keys(m).filter(h=>m[h]).map(unkey),on=who.includes(state.me);
+    return `<button type="button" ${canAct?`data-react="${k}" data-id="${esc(r.id)}"`:"disabled"} aria-pressed="${on}" title="${esc(l+(who.length?"："+who.join("、"):""))}">${emo}<span class="c">${who.length||""}</span><span class="hint" style="font-size:11px">${l}</span></button>`}).join("");
+  const cm=Object.entries(r.comments||{}).filter(([,c])=>c&&!c.deleted&&c.text).sort((a,b)=>(a[1].at||0)-(b[1].at||0));
+  return `<article class="refl">
+    <div class="refl-head"><span class="who"><span class="av">${esc((r.coach||"?").slice(0,1))}</span>${esc(r.coach)}</span><span class="wk">${wkLabel(r.week)}${r.sample?' <span class="sample-tag">サンプル</span>':""}</span></div>
+    ${r.P.length?`<div class="prv">${r.P.map(p=>`<p class="prv">前回の目標${p.text?"「"+esc(p.text)+"」":""}：<b>${PREV[p.result]||"—"}</b>${p.note?"　"+esc(p.note):""}</p>`).join("")}</div>`:""}
+    ${r.good||r.more?`<div class="gm">${r.good?`<p><span class="gm-tag g">Good</span>${esc(r.good)}</p>`:""}${r.more?`<p><span class="gm-tag m">More</span>${esc(r.more)}</p>`:""}</div>`:""}
+    ${r.T.map(t=>`<p class="nxt"><span class="gm-tag t">Next</span>${esc(t)}</p>`).join("")}
+    ${r.text?`<p class="body">${esc(r.text)}</p>`:""}
+    ${r.L.map(l=>`<p class="lrn">📌 ${esc(l.text)}${l.status==="worked"?'　<span class="up-t">✓ 効いた</span>':l.status==="tried"?'　<span class="hint">試した</span>':""}</p>`).join("")}
+    <div class="rx">${rx}</div>
+    ${cm.length||canAct?`<div class="cmts">${cm.map(([id,c])=>`<div class="cmt"><b>${esc(c.coach)}</b>${esc(c.text)}${canAct&&c.coach===state.me?` <button class="link danger" data-delc="${esc(id)}" data-id="${esc(r.id)}">削除</button>`:""}</div>`).join("")}
+      ${canAct?`<form class="cform" data-cform="${esc(r.id)}"><input type="text" name="c" placeholder="一言コメント" aria-label="コメント" autocomplete="off"><button class="btn small" type="submit">送る</button></form>`:""}</div>`:""}
+  </article>`;
+}
+function scopeChips(name,mine){return [["all","全員"],["mine","自分だけ"]].map(([v,l])=>`<label class="chip"><input type="radio" name="${name}" value="${v}"${(mine?"mine":"all")===v?" checked":""}${v==="mine"&&!state.me?" disabled":""}>${l}</label>`).join("")}
+function renderRFeed(R){
+  $("#rFeedScope").innerHTML=scopeChips("rfs",state.rFeedMine);
+  const list=state.rFeedMine?R.filter(r=>r.coach===state.me):R;
+  if(!list.length){$("#rFeed").innerHTML=`<p class="empty">まだ振り返りがありません。「今週」から書いてみましょう。</p>`;return}
+  let html="",cur=null;
+  list.forEach(r=>{if(r.week!==cur){cur=r.week;const n=R.filter(x=>x.week===cur).length;html+=`<h4 class="week-h">${wkLabel(cur)}　<span class="hint" style="font-family:var(--body);font-size:12px">${n}人</span></h4>`}html+=reflItem(r)});
+  $("#rFeed").innerHTML=html;
+}
+function renderRPerson(notes,R){
+  const people=uniq([...state.coaches,...R.map(r=>r.coach)]);
+  if(!state.rPerson||!people.includes(state.rPerson))state.rPerson=people.includes(state.me)?state.me:(people[0]||"");
+  const who=state.rPerson;
+  $("#rPersonPick").innerHTML=people.map(p=>`<label class="chip"><input type="radio" name="rperson" value="${esc(p)}"${p===who?" checked":""}>${esc(p)}${p===state.me?"（自分）":""}</label>`).join("");
+  const mine=R.filter(r=>r.coach===who),F=allLearnings(mine),P=mine.flatMap(r=>r.P);
+  const cnt=k=>P.filter(p=>p.result===k).length;
+  $("#rPersonTiles").innerHTML=`<div class="tile"><div class="k">振り返り</div><div class="v">${mine.length}<span style="font-size:13px;color:var(--ink-3)">週</span></div></div><div class="tile"><div class="k">学び</div><div class="v">${F.length}</div><div class="d">効いた ${F.filter(x=>x.l.status==="worked").length}</div></div><div class="tile"><div class="k">目標の達成</div><div class="v up-t">${cnt("done")}</div><div class="d">一部 ${cnt("partial")}・未 ${cnt("not")}</div></div>`;
+  const pr=F.filter(x=>x.l.status==="worked");
+  $("#rPersonPrinciples").innerHTML=pr.length?`<div class="lgroup principle"><h3 style="margin:0">${esc(who)}の指導の原則（${pr.length}）</h3>${pr.map(({r,l})=>`<div class="lcard"><p>📌 ${esc(l.text)}</p><small>${wkLabel(r.week)}</small></div>`).join("")}</div>`:"";
+  const old=notes.filter(n=>n.subject==="coach"&&n.coach===who);
+  $("#rPersonList").innerHTML=(mine.length?`<h3 style="margin:0">これまでの振り返り</h3>`+mine.map(reflItem).join(""):`<p class="empty">${esc(who||"この人")}の振り返りはまだありません。</p>`)
+    +(old.length?`<h3 style="margin:8px 0 0">以前の振り返りメモ（書くタブから記録したもの）</h3><ul class="notes">${old.map(n=>noteItem(n,{noTools:true})).join("")}</ul>`:"");
+}
+function renderRCards(R){
+  $("#rCardScope").innerHTML=scopeChips("rcs",state.rCardMine);
+  const F=allLearnings(state.rCardMine?R.filter(r=>r.coach===state.me):R);
+  const card=({r,l})=>`<div class="lcard"><p>📌 ${esc(l.text)}</p><small>${esc(r.coach)} ・ ${wkLabel(r.week)}${r.sample?" ・ サンプル":""}</small>${statusRow(r,l)}</div>`;
+  const g=(title,arr,cls)=>arr.length?`<div class="lgroup ${cls||""}"><h3 style="margin:6px 0 0">${title}（${arr.length}）</h3>${arr.map(card).join("")}</div>`:"";
+  const html=g("効いた ＝ 指導の原則",F.filter(x=>x.l.status==="worked"),"principle")+g("試した",F.filter(x=>x.l.status==="tried"))+g("これから試す",F.filter(x=>!x.l.status));
+  $("#rCards").innerHTML=html||`<p class="empty">振り返りに📌の学びを書くと、ここに貯まります。</p>`;
+}
+function renderRMonth(R){
+  const d=new Date(),s=new Date(d.getFullYear(),d.getMonth()+state.rMonthOffset,1),e=new Date(s.getFullYear(),s.getMonth()+1,0);
+  const from=ymd(s),to=ymd(e),key="rm-"+from.slice(0,7);
+  $("#rmLabel").textContent=`${s.getFullYear()}年${s.getMonth()+1}月`;
+  $("#rmSub").textContent=state.rMonthOffset===0?"今月":state.rMonthOffset===-1?"先月":"";
+  $("#rmNext").disabled=state.rMonthOffset>=0;
+  const M=R.filter(r=>r.week>=from&&r.week<=to),F=allLearnings(M);
+  const coaches=uniq(M.map(r=>r.coach)),worked=F.filter(x=>x.l.status==="worked").length;
+  $("#rmTiles").innerHTML=`<div class="tile"><div class="k">振り返り</div><div class="v">${M.length}</div></div><div class="tile"><div class="k">書いたコーチ</div><div class="v">${coaches.length}<span style="font-size:14px;color:var(--ink-3)">/${Math.max(state.coaches.length,coaches.length)}</span></div></div><div class="tile"><div class="k">効いた学び</div><div class="v up-t">${worked}</div></div>`;
+  $("#rmAI").innerHTML=aiSection(key,M.length,()=>buildReflPrompt(`${s.getFullYear()}年${s.getMonth()+1}月`,M),`この月の振り返り ${M.length}件 から、コーチ全員に共通する学びをまとめます。`,"この月の振り返りはまだありません。",reflSample());
+  $("#rmLearnings").innerHTML=F.length?F.map(({r,l})=>`<div class="lcard"><p>📌 ${esc(l.text)}</p><small>${esc(r.coach)} ・ ${wkLabel(r.week)}${l.status?" ・ "+STATUS[l.status]:""}</small></div>`).join(""):`<p class="empty">この月の📌はまだありません。</p>`;
+}
+function buildReflPrompt(label,M){
+  const rows=M.slice(0,120).map(r=>`【${r.coach}／${wkLabel(r.week)}】\nGood：${(r.good||"-").replace(/\s+/g," ").slice(0,300)}\nMore：${(r.more||"-").replace(/\s+/g," ").slice(0,300)}\nメモ：${(r.text||"-").replace(/\s+/g," ").slice(0,300)}\n学び：${r.L.map(l=>`${l.text}（${l.status==="worked"?"効いた":l.status==="tried"?"試した":"未確認"}）`).join(" / ")||"-"}\n来週の目標：${r.T.join(" / ")||"-"}\n前回の目標の結果：${r.P.map(p=>`${p.text||""} → ${PREV[p.result]||"-"} ${p.note||""}`).join(" / ")||"-"}`).join("\n\n");
+  return `あなたは学生ラクロスチームのコーチ陣の学び合いを手伝うアシスタントです。
+以下は ${label} にコーチ${uniq(M.map(r=>r.coach)).length}人が書いた週ごとの振り返り${M.length}件です。コーチ全員で読む「今月の学びのまとめ」を作ってください。
+
+書き方:
+- 日本語のプレーンテキスト。Markdown記号（#, *, **）は使わない。
+- 次の見出しをこの順に使い、見出しの下は「・」で始まる短い箇条書き（各3つ以内）。該当がなければ「・特になし」。
+■ 複数のコーチに共通する学び
+■ 試して効いたこと（指導の原則の候補）
+■ コーチごとの成長・変化（1人1行）
+■ まだ解決していない悩み・問い
+■ 来月、チームのコーチ全員で試したいこと
+- 書かれていないことは推測しない。コーチ名は記録どおりに書く。評価や採点はせず、互いに学び合える書き方にする。
+
+振り返り:
+${rows}`;
+}
+
+/* ---------- form ---------- */
+const form=$("#noteForm");
+function buildStatic(){
+  $("#f-scene").innerHTML=SCENES.map(s=>`<option>${s}</option>`).join("");
+  $("#subjectChips").innerHTML=Object.entries(SUBJECTS).filter(([k])=>k!=="coach").map(([k,v])=>`<label class="chip"><input type="radio" name="subject" value="${k}">${v}</label>`).join("");
+  $("#catChips").innerHTML=CATS.map(c=>`<label class="chip"><input type="checkbox" name="cat" value="${c}">${c}</label>`).join("");
+  $("#signalChips").innerHTML=Object.entries(SIGNALS).map(([k,v])=>`<label class="chip sig-${k}"><input type="radio" name="signal" value="${k}"><b>${v.sym}</b>${v.label}</label>`).join("");
+}
+function setRadio(name,val){form.querySelectorAll(`input[name=${name}]`).forEach(i=>i.checked=i.value===val)}
+function syncPlayerField(){
+  const sub=form.elements.subject.value,isCoach=sub==="coach";
+  $("#coachFields").hidden=!isCoach;$("#textField").hidden=isCoach;$("#signalField").hidden=isCoach;
+  $("#catLegend").innerHTML=isCoach?'関わった分野 <span class="hint">（任意・複数可）</span>':'分野 <span class="hint">（複数可）</span>';
+  $("#nextBox").hidden=isCoach;$("#playerField").hidden=!(sub==="player"||sub==="staff");
+  const lbl=sub==="staff"?"スタッフ":"選手";
+  $("#playerLegend").innerHTML=lbl+' <span class="hint">（タップで選択）</span>';
+  $("#f-newplayer").placeholder="＋ 新しい"+lbl+"の名前を入力";
+  renderPlayerChips();
+}
+function resetForm(keepSession){
+  const date=form.date.value,scene=form.scene.value;
+  form.reset();
+  form.date.value=keepSession&&date?date:today();
+  form.scene.value=keepSession&&scene?scene:"練習";
+  setRadio("subject","player");setRadio("signal","flat");
+  state.formPlayer="";renderPlayerChips();
+  $("#nextBox").open=false;
+  syncPlayerField();
+  state.editingId=null;$("#editingBar").hidden=true;$("#saveBtn").textContent="記録する";
+}
+form.addEventListener("change",e=>{
+  if(e.target.name==="subject"){if(!realPlayerNames(e.target.value==="staff"?"staff":"player").includes(state.formPlayer))state.formPlayer="";syncPlayerField()}
+  if(e.target.name==="player"){state.formPlayer=e.target.value;$("#f-newplayer").value=""}
+});
+$("#f-newplayer").addEventListener("input",e=>{if(e.target.value.trim()){state.formPlayer="";form.querySelectorAll("input[name=player]").forEach(i=>i.checked=false)}});
+
+function msg(text,err){const m=$("#formMsg");m.textContent=text;m.className="form-msg"+(err?" err":"")}
+function toast(text){const t=$("#toast");t.textContent=text;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,2200)}
+function writeError(e){
+  if(e&&e.code==="pass")return "パスコードが変わりました。入力し直してください。";
+  return "保存できませんでした。通信状況を確認して、もう一度お試しください。";
+}
+
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!state.db||state.readOnly)return;
+  if(!state.me){openSheet("記録する前に、あなたの名前を選んでください。");return}
+  const subject=form.elements.subject.value;
+  const player=(subject==="player"||subject==="staff")?($("#f-newplayer").value.trim()||state.formPlayer):"";
+  const data={date:form.date.value||today(),scene:form.scene.value||"練習",subject,player,
+    cats:[...form.querySelectorAll("input[name=cat]:checked")].map(i=>i.value),
+    signal:form.elements.signal.value||"flat",text:form.text.value.trim(),nextAction:form.nextAction.value.trim(),good:"",more:""};
+  if(subject==="coach"){
+    data.good=form.good.value.trim();data.more=form.more.value.trim();data.nextAction=form.goal.value.trim();data.signal="flat";data.text=gmText(data.good,data.more);
+    if(!data.good&&!data.more){msg("Good か More のどちらかを書いてください。",true);form.good.focus();return}
+  }
+  if((subject==="player"||subject==="staff")&&!player){msg((subject==="staff"?"スタッフ":"選手")+"を選ぶか、名前を入力してください。",true);return}
+  if(!data.text){msg("気づきを入力してください。",true);form.text.focus();return}
+  const btn=$("#saveBtn");btn.disabled=true;msg("保存しています…");
+  try{
+    if(state.editingId){
+      const orig=state.realNotes.find(n=>n.id===state.editingId)||{};
+      await state.db.doc("notes/"+state.editingId).set({...data,coach:orig.coach||state.me,actionDone:data.nextAction?!!orig.actionDone:false,createdAt:orig.createdAt||Date.now(),updatedAt:Date.now()});
+    }else{
+      await state.db.collection("notes").add({...data,coach:state.me,actionDone:false,createdAt:Date.now()});
+    }
+    if(player&&!state.realPlayers.some(p=>p.name===player))await state.db.collection("players").add({name:player,role:subject==="staff"?"staff":"player",createdAt:Date.now()});
+    const wasEdit=!!state.editingId;resetForm(true);msg("");toast(wasEdit?"更新しました":"記録しました");window.scrollTo({top:0,behavior:"smooth"});
+  }catch(err){msg(writeError(err),true)}
+  finally{btn.disabled=!state.db||state.readOnly}
+});
+$("#cancelEdit").addEventListener("click",()=>{resetForm(true);msg("")});
+
+function startEdit(id){
+  const n=state.realNotes.find(x=>x.id===id);if(!n)return;
+  showTab("write");
+  form.date.value=n.date;form.scene.value=n.scene||"練習";setRadio("subject",n.subject);setRadio("signal",n.signal);
+  form.querySelectorAll("input[name=cat]").forEach(i=>i.checked=(n.cats||[]).includes(i.value));
+  state.formPlayer=n.player||"";renderPlayerChips();$("#f-newplayer").value="";
+  const gm=n.subject==="coach"&&(n.good||n.more);
+  form.text.value=gm?"":(n.text||"");form.good.value=n.good||(n.subject==="coach"&&!gm?n.text||"":"");form.more.value=n.more||"";form.nextAction.value=n.subject==="coach"?"":(n.nextAction||"");form.goal.value=n.subject==="coach"?(n.nextAction||""):"";$("#nextBox").open=!!n.nextAction&&n.subject!=="coach";
+  syncPlayerField();
+  state.editingId=id;$("#editingBar").hidden=false;$("#saveBtn").textContent="更新する";
+}
+
+/* ---------- 名前シート ---------- */
+function openSheet(lead){
+  $("#meLead").textContent=lead||"書いた気づきに名前が付きます。この端末で覚えておきます。";
+  const names=uniq([...state.coaches]);
+  $("#meNames").innerHTML=names.length?names.map(n=>`<button type="button" data-me="${esc(n)}" aria-pressed="${n===state.me}">${esc(n)}</button>`).join(""):`<p class="empty" style="grid-column:1/-1">まだ名前が登録されていません。下から追加してください。</p>`;
+  $("#coachAdd").hidden=!state.db||state.readOnly;
+  $("#meSheet").hidden=false;
+}
+function closeSheet(){$("#meSheet").hidden=true}
+$("#meBtn").addEventListener("click",()=>openSheet());
+$("#meClose").addEventListener("click",closeSheet);
+$("#meSheet").addEventListener("click",e=>{if(e.target.id==="meSheet")closeSheet();const b=e.target.closest("[data-me]");if(b){state.me=b.dataset.me;LS.set("kizuki.me",state.me);closeSheet();render();toast(`${state.me}さんとして記録します`)}});
+$("#coachAdd").addEventListener("submit",async e=>{
+  e.preventDefault();const inp=$("#f-addcoach"),name=inp.value.trim();
+  if(!name||!state.db)return;
+  if(state.coaches.includes(name)){toast("すでに登録されています");return}
+  try{await state.db.doc("settings/team").set({coaches:[...state.coaches,name]});state.coaches=[...state.coaches,name];inp.value="";openSheet($("#meLead").textContent)}
+  catch(err){toast(writeError(err))}
+});
+
+/* ---------- 選手追加 ---------- */
+document.querySelectorAll("[data-prole]").forEach(b=>b.addEventListener("click",()=>{state.pRole=b.dataset.prole;render()}));
+$("#playerAdd").addEventListener("submit",async e=>{
+  e.preventDefault();const inp=$("#f-addplayer"),name=inp.value.trim();
+  if(!name||!state.db||state.readOnly)return;
+  if(state.realPlayers.some(p=>p.name===name)){toast("すでに一覧にいます");return}
+  try{await state.db.collection("players").add({name,role:state.pRole,createdAt:Date.now()});inp.value="";toast(`${name} を${ROLE[state.pRole]}に追加しました`)}
+  catch(err){toast(writeError(err))}
+});
+
+/* ---------- tabs & delegation ---------- */
+function showTab(tab){
+  document.querySelectorAll("[data-panel]").forEach(s=>s.hidden=s.dataset.panel!==tab);
+  document.querySelectorAll(".bnav button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===tab));
+  try{history.replaceState(null,"","#"+tab)}catch(_){}
+  window.scrollTo({top:0});
+}
+document.querySelector(".bnav").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b)showTab(b.dataset.tab)});
+
+const pendingDelete={};
+function armDelete(btn,key,run){
+  if(pendingDelete[key]){clearTimeout(pendingDelete[key]);delete pendingDelete[key];run();return}
+  const orig=btn.textContent;btn.textContent="もう一度押すと削除";
+  pendingDelete[key]=setTimeout(()=>{delete pendingDelete[key];if(btn.isConnected)btn.textContent=orig},3000);
+}
+document.addEventListener("click",async e=>{
+  const go=e.target.closest("[data-go]");
+  if(go){
+    const g=JSON.parse(go.dataset.go);
+    if(g.filters)state.filters={...EMPTY_FILTERS,...g.filters};
+    if(g.tab==="write"&&g.player){resetForm(true);const role=g.role||roleOf(g.player);setRadio("subject",role);
+      if(realPlayerNames(role).includes(g.player))state.formPlayer=g.player;else $("#f-newplayer").value=g.player;syncPlayerField();
+      showTab("write");form.text.focus();return}
+    render();showTab(g.tab);return;
+  }
+  if(e.target.id==="clearRange"){state.filters.from=state.filters.to="";render();return}
+  const ed=e.target.closest("[data-edit]");if(ed){startEdit(ed.dataset.edit);return}
+  const del=e.target.closest("[data-del]");
+  if(del){const id=del.dataset.del;armDelete(del,"n"+id,async()=>{try{await state.db.doc("notes/"+id).delete();toast("削除しました");if(state.editingId===id)resetForm(true)}catch(err){toast(writeError(err))}});return}
+  const dp=e.target.closest("[data-delplayer]");
+  if(dp){const id=dp.dataset.delplayer;armDelete(dp,"p"+id,async()=>{try{await state.db.doc("players/"+id).delete();toast("一覧から外しました（記録は残ります）")}catch(err){toast(writeError(err))}});return}
+  const dn=e.target.closest("[data-done]");
+  if(dn&&!dn.disabled){const n=state.realNotes.find(x=>x.id===dn.dataset.done);if(!n)return;dn.disabled=true;
+    try{await state.db.doc("notes/"+n.id).update({actionDone:!n.actionDone});toast(n.actionDone?"未完了に戻しました":"試したことに移しました")}catch(err){toast(writeError(err));dn.disabled=false}}
+});
+document.addEventListener("change",e=>{
+  if(e.target.name==="qc"){state.filters.coach=e.target.value;render()}
+  if(e.target.name==="rwk"){state.rWeekOffset=Number(e.target.value);state.rDirty=false;render()}
+  if(e.target.name==="rperson"){state.rPerson=e.target.value;render()}
+  if(e.target.name==="rfs"){state.rFeedMine=e.target.value==="mine";render()}
+  if(e.target.name==="rcs"){state.rCardMine=e.target.value==="mine";render()}
+});
+document.querySelectorAll("[data-rview]").forEach(b=>b.addEventListener("click",()=>{state.rview=b.dataset.rview;render()}));
+$("#rmPrev").addEventListener("click",()=>{state.rMonthOffset--;render()});
+$("#rmNext").addEventListener("click",()=>{if(state.rMonthOffset<0){state.rMonthOffset++;render()}});
+$("#rForm").addEventListener("input",()=>{state.rDirty=true});
+$("#rForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!state.db||state.readOnly)return;
+  if(!state.me){openSheet("振り返りを書く前に、あなたの名前を選んでください。");return}
+  const f=e.currentTarget,w=addDays(weekStart(today()),7*state.rWeekOffset);
+  const mine=myRefl(allRefl(),w);
+  const curStatus=Object.fromEntries((mine?.L||[]).map(l=>[l.id,l.status||""]));
+  const learnings=[...document.querySelectorAll("#rLearnRows .lrow")].map(row=>({id:row.dataset.lid||newId(),text:row.querySelector("input").value.trim()}))
+    .filter(l=>l.text).map(l=>({...l,status:curStatus[l.id]??""}));
+  const nextTries=[...document.querySelectorAll("#rTryRows input")].map(i=>i.value.trim()).filter(Boolean);
+  const prevResults=[...document.querySelectorAll("#rPrev .prev-item")].map(el=>({text:el.dataset.ptext,result:el.querySelector("input[type=radio]:checked")?.value||"",note:el.querySelector("input[type=text]").value.trim()})).filter(p=>p.result||p.note);
+  const data={coach:state.me,week:w,text:f.text.value.trim(),good:f.good.value.trim(),more:f.more.value.trim(),learnings,nextTries,prevResults,
+    learning:"",nextTry:"",prevResult:"",prevNote:"",learningStatus:"",updatedAt:Date.now()};
+  const m=$("#rMsg");
+  if(!data.text&&!data.good&&!data.more&&!learnings.length){m.textContent="Good・More・学びのどれかを書いてください。";m.className="form-msg err";return}
+  const btn=$("#rSave");btn.disabled=true;m.textContent="保存しています…";m.className="form-msg";
+  try{
+    if(mine)await state.db.doc("reflections/"+mine.id).update(data);
+    else await state.db.collection("reflections").add({...data,reactions:{},comments:{},createdAt:Date.now()});
+    state.rDirty=false;state.rFormKey=null;m.textContent="";toast(mine?"更新しました":"公開しました。みんなのタブで読めます");
+  }catch(err){m.textContent=writeError(err);m.className="form-msg err"}
+  finally{btn.disabled=!state.db||state.readOnly}
+});
+document.addEventListener("submit",async e=>{
+  const f=e.target.closest("[data-cform]");if(!f)return;
+  e.preventDefault();
+  const text=f.c.value.trim();if(!text||!state.db||!state.me)return;
+  const cid=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  f.querySelector("button").disabled=true;
+  try{await state.db.doc("reflections/"+f.dataset.cform).update({comments:{[cid]:{coach:state.me,text:text.slice(0,300),at:Date.now()}}});f.c.value=""}
+  catch(err){toast(writeError(err))}
+  finally{if(f.isConnected)f.querySelector("button").disabled=false}
+});
+document.addEventListener("click",async e=>{
+  const t=e.target.closest("[data-react],[data-lstatus],[data-delc],[data-retry],[data-copyprompt],[data-memo],[data-memosave],[data-memocancel],[data-addrow],[data-rmrow]");if(!t)return;
+  if(t.dataset.copyprompt){copyPrompt(t.dataset.copyprompt);return}
+  if(t.dataset.memo){state.memoEdit=t.dataset.memo;render();$("#memoText")?.focus();return}
+  if(t.dataset.memosave){saveMemo(t.dataset.memosave);return}
+  if(t.dataset.memocancel){state.memoEdit=null;render();return}
+  if(t.dataset.addrow){const inp=addRow(t.dataset.addrow);state.rDirty=true;inp.focus();return}
+  if(t.hasAttribute("data-rmrow")){const row=t.closest(".lrow"),box=row.parentElement;state.rDirty=true;
+    if(box.children.length>1)row.remove();else{row.querySelector("input").value="";row.dataset.status=""}return}
+  if(t.dataset.retry!==undefined){const inp=addRow("t",t.dataset.retry);state.rDirty=true;inp.focus();toast("「来週の目標」に入れました");return}
+  const id=t.dataset.id,r=state.realRefl.find(x=>x.id===id);if(!r||!state.db)return;
+  t.disabled=true;
+  try{
+    if(t.dataset.react){const k=nkey(state.me),on=!!r.reactions?.[t.dataset.react]?.[k];await state.db.doc("reflections/"+id).update({reactions:{[t.dataset.react]:{[k]:!on}}})}
+    else if(t.dataset.lstatus){
+      const L=normRefl(r).L.map(l=>({id:l.id,text:l.text,status:l.status||""}));
+      const l=L.find(x=>x.id===t.dataset.lid);if(!l)return;
+      l.status=l.status===t.dataset.lstatus?"":t.dataset.lstatus;
+      await state.db.doc("reflections/"+id).update({learnings:L,learning:"",learningStatus:""});
+      if(l.status==="worked")toast("指導の原則に加わりました");
+    }
+    else if(t.dataset.delc){await state.db.doc("reflections/"+id).update({comments:{[t.dataset.delc]:{deleted:true,text:""}}})}
+  }catch(err){toast(writeError(err))}
+  finally{if(t.isConnected)t.disabled=false}
+});
+["coach","subject","cat","signal","player"].forEach(k=>$("#flt-"+k).addEventListener("change",e=>{state.filters[k]=e.target.value;render()}));
+let qT;$("#flt-q").addEventListener("input",e=>{clearTimeout(qT);qT=setTimeout(()=>{state.filters.q=e.target.value;render()},200)});
+$("#flt-clear").addEventListener("click",()=>{state.filters={...EMPTY_FILTERS};render()});
+$("#fltToggle").addEventListener("click",e=>{const box=$("#filterBox");box.hidden=!box.hidden;e.currentTarget.setAttribute("aria-expanded",!box.hidden)});
+document.querySelectorAll(".segbar button").forEach(b=>b.addEventListener("click",()=>{state.sum={mode:b.dataset.mode,offset:0};render()}));
+$("#pPrev").addEventListener("click",()=>{state.sum.offset--;render()});
+$("#pNext").addEventListener("click",()=>{if(state.sum.offset<0){state.sum.offset++;render()}});
+
+/* ---------- boot ---------- */
+buildStatic();resetForm(false);
+const initial=(location.hash||"").slice(1);
+if(["write","log","summary","players","reflect"].includes(initial))showTab(initial);
+render();
+
+// 記録の保存先（Googleスプレッドシートの窓口）
+const API_URL="https://script.google.com/macros/s/AKfycbyQxg4wujhItxQfuHT7D1M-3XVJQzycMKg-5zb4Xm5HHVnn8BehsbF9GkL8vMBUWBqF/exec";
+async function rpc(op,payload){
+  let r;
+  try{
+    const res=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({pass:state.pass,op},payload||{})),redirect:"follow"});
+    r=await res.json();
+  }catch(e){throw {code:"unavailable",message:String(e&&e.message||e)}}
+  if(r&&r.ok){applyData(r.data);return r}
+  if(r&&r.error==="pass")showGate(r.locked?"入力の失敗が続いたため、しばらく入れません。15分ほど待ってください。":"パスコードが違うか、変更されました。");
+  throw {code:(r&&r.error)||"unavailable"};
+}
+const serverDb={
+  doc:p=>{const [t,id]=p.split("/");return {set:o=>rpc("set",{t,id,o}),update:o=>rpc("update",{t,id,o}),delete:()=>rpc("delete",{t,id})}},
+  collection:t=>({add:o=>rpc("add",{t,o})})
+};
+function applyData(d){
+  if(!d)return;
+  state.db=serverDb;state.status="ready";
+  state.realNotes=d.notes||[];
+  state.realPlayers=(d.players||[]).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+  state.realRefl=d.reflections||[];
+  state.coaches=(d.coaches||[]).map(String);
+  state.summaries=d.summaries||{};
+  render();
+  if(!state.me&&state.coaches.length&&$("#meSheet").hidden&&$("#gate").hidden)openSheet();
+}
+function showGate(msg){
+  $("#gate").hidden=false;$("#gateMsg").textContent=msg||"";$("#gateMsg").className="form-msg"+(msg?" err":"");
+  setTimeout(()=>$("#gatePass").focus(),50);
+}
+$("#gateForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const v=$("#gatePass").value.trim();if(!v)return;
+  $("#gateBtn").disabled=true;$("#gateMsg").textContent="確認しています…";$("#gateMsg").className="form-msg";
+  state.pass=v;
+  try{await rpc("load");LS.set("kizuki.pass",v);$("#gate").hidden=true;$("#gatePass").value="";
+    if(!state.me&&state.coaches.length)openSheet()}
+  catch(err){if(err.code!=="pass")showGate("接続できませんでした。もう一度お試しください。")}
+  finally{$("#gateBtn").disabled=false}
+});
+$("#copyClose").addEventListener("click",()=>{$("#copySheet").hidden=true});
+$("#copyAgain").addEventListener("click",async()=>{
+  const ta=$("#copyText");
+  try{await navigator.clipboard.writeText(ta.value);toast("コピーしました")}
+  catch(_){ta.focus();ta.select();toast("選択しました。コピーしてください")}
+});
+let polling=false;
+function refresh(){
+  if(polling||!state.pass||!$("#gate").hidden||document.visibilityState!=="visible")return;
+  polling=true;rpc("load").catch(()=>{}).finally(()=>{polling=false});
+}
+setInterval(refresh,60000);
+document.addEventListener("visibilitychange",refresh);
+if(state.pass){
+  $("#gate").hidden=true;
+  rpc("load").catch(err=>{if(err.code!=="pass"){state.status="unavailable";render()}});
+}else showGate("");
+</script>
+</body>
+</html>
